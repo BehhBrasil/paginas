@@ -1,0 +1,772 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><!-- Meta Pixel -->
+<script>
+  var PIXEL_ID = "1433516281607820";
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', PIXEL_ID); fbq('track', 'PageView');
+  document.addEventListener('click', function(e){ var a=e.target.closest('a[href*="wa.me"]'); if(a){ fbq('track','Lead',{content_name:'Trancista Academy'}); } });
+</script>
+</head><body>
+<title>Trancista Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Urbanist:wght@500;600;700;800&display=swap">
+<style>
+/* Layout: página única, sem botões de compra. Topo com vídeo em tela cheia e texto alinhado à esquerda, faixa em movimento, seções que alternam claro, escuro (foto) e mostarda; blocos em grade (bento) para o que está incluído. Identidade Braids Rafa: mostarda, ouro, creme e preto quente. Tema único definido pela marca. */
+:root{
+  --mustard:#BB7924;
+  --mustard-deep:#8f5a14;
+  --gold:#EDC339;
+  --sun:#FFDA6D;
+  --cream:#FFF5E4;
+  --sand:#EBCB9E;
+  --ink:#241d18;
+  --ink-soft:#4a4038;
+  --paper:#FFFDF9;
+  --mist:#F6F0E6;
+  --night:#1c1713;
+  --line:rgba(36,29,24,.12);
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'Urbanist','Segoe UI',system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:76px;overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,p,ul{margin:0}
+ul{padding:0;list-style:none}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:6px}
+.wrap{width:100%;max-width:1120px;margin-inline:auto;padding-inline:20px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--mustard-deep)}
+.eyebrow::before{content:"";width:28px;height:2px;background:currentColor;border-radius:2px}
+h2.title{font-family:var(--f-display);font-weight:600;font-size:clamp(32px,5vw,52px);line-height:1.04;letter-spacing:-.025em;text-wrap:balance;font-variation-settings:"opsz" 80}
+.lead{font-size:clamp(17px,2vw,20px);color:var(--ink-soft);max-width:58ch;text-wrap:pretty}
+
+/* reveal */
+.rv{transform:translateY(18px);transition:transform .9s var(--ease)}
+.rv.in{transform:none}
+.rv[data-d="1"]{transition-delay:.08s}.rv[data-d="2"]{transition-delay:.16s}.rv[data-d="3"]{transition-delay:.24s}
+
+/* progresso e navegação */
+.progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:60;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--gold),var(--sun));pointer-events:none}
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding:calc(14px + env(safe-area-inset-top,0px)) 0 14px;transition:background .35s,box-shadow .35s,padding .35s}
+.nav.solid{background:rgba(28,23,19,.95);box-shadow:0 1px 0 rgba(255,255,255,.08);padding-block:calc(10px + env(safe-area-inset-top,0px)) 10px}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.02em;color:#fff;text-decoration:none}
+.logo svg{width:16px;height:auto}
+.nav ul{display:flex;gap:26px}
+.nav a.l{font-weight:700;font-size:14px;color:rgba(255,255,255,.82);text-decoration:none;position:relative;padding-block:6px}
+.nav a.l::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--sun);transform:scaleX(0);transform-origin:0 50%;transition:transform .3s var(--ease)}
+.nav a.l:hover{color:#fff}.nav a.l:hover::after{transform:scaleX(1)}
+
+/* HERO */
+.hero{position:relative;isolation:isolate;overflow:hidden;color:#fff;background:var(--img1) 30% 40%/cover no-repeat,#3a342e;padding-block:150px 76px}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-4}
+.hero::before{content:"";position:absolute;inset:0;z-index:-3;background:linear-gradient(100deg,rgba(28,23,19,.88) 0%,rgba(28,23,19,.62) 55%,rgba(28,23,19,.35) 100%),linear-gradient(180deg,rgba(28,23,19,.35),rgba(28,23,19,.7))}
+.braids{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:-2;opacity:.5}
+.braids path{fill:none;stroke:var(--sun);stroke-width:5;stroke-linecap:round;stroke-dasharray:2000;stroke-dashoffset:2000;animation:draw 5.5s var(--ease) .3s forwards}
+.braids path:nth-child(2){stroke-width:3;stroke:#fff;opacity:.55;animation-delay:.9s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes drift{to{transform:translateY(14px)}}
+.chip{text-transform:none;letter-spacing:0;display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.26);font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--sun)}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--sun);animation:blink 2s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{font-family:var(--f-display);font-weight:700;font-size:clamp(46px,8.4vw,98px);line-height:.98;letter-spacing:-.035em;margin-block:22px 24px;max-width:12.5em;text-wrap:balance;font-variation-settings:"opsz" 96}
+.hero h1 em{font-style:normal;color:var(--sun)}
+.hero .lead{color:rgba(255,255,255,.9);max-width:54ch}
+.stats-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:44px}
+.stat{min-width:0;flex:1 1 170px;max-width:240px;padding:18px 22px;border-radius:20px;background:rgba(40,33,28,.55);border:1px solid rgba(255,255,255,.22);transition:transform .35s var(--ease),background .35s}
+.stat:hover{transform:translateY(-5px);background:rgba(255,255,255,.16)}
+.stat b{display:block;font-family:var(--f-display);font-weight:700;font-size:clamp(34px,4.6vw,48px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#fff}
+.stat span{display:block;margin-top:8px;font-weight:700;font-size:14px;color:var(--sun)}
+.cue{display:inline-flex;align-items:center;gap:10px;margin-top:50px;font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75);text-decoration:none}
+.cue svg{width:18px;height:18px;animation:bounce 1.8s ease-in-out infinite}
+@keyframes bounce{50%{transform:translateY(7px)}}
+
+/* faixa em movimento */
+.ticker{background:var(--gold);color:var(--ink);overflow:hidden;border-block:1px solid rgba(0,0,0,.08)}
+.ticker-track{display:flex;width:max-content;animation:slide 38s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker span{display:inline-flex;align-items:center;gap:26px;padding:16px 13px;font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.4vw,24px);white-space:nowrap}
+.ticker span::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--mustard)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* método */
+.method{padding-block:96px 20px;background:var(--paper)}
+.method-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:end}
+.method h2{margin-top:16px}
+.method .lead{margin-bottom:6px}
+
+/* para quem é */
+.for{position:relative;isolation:isolate;margin-top:76px;padding-block:96px 100px;color:#fff;background:var(--img2) 50% 92%/cover no-repeat,#2b2520}
+.for::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(28,23,19,.9),rgba(28,23,19,.74) 50%,rgba(28,23,19,.92))}
+.for .eyebrow{color:var(--sun)}
+.for h2{margin-block:16px 52px;max-width:15em}
+.for-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.pcard{position:relative;padding:28px 28px 30px;border-radius:24px;background:rgba(255,245,228,.96);color:var(--ink);box-shadow:0 22px 50px rgba(0,0,0,.35);transition:transform .4s var(--ease),box-shadow .4s}
+.pcard:hover{transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.pcard h3{font-family:var(--f-display);font-weight:700;font-size:24px;letter-spacing:-.02em;line-height:1.1;margin-block:16px 10px}
+.pcard p{font-size:16px;line-height:1.5;color:var(--ink-soft)}
+.level{display:flex;align-items:center;gap:6px;font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mustard-deep)}
+.level i{width:26px;height:6px;border-radius:6px;background:rgba(36,29,24,.15)}
+.level i.on{background:var(--mustard)}
+.level b{margin-left:8px;font-weight:800}
+
+/* placeholders de mídia */
+.slot{position:relative;display:grid;place-items:center;overflow:hidden;border-radius:22px;background:linear-gradient(160deg,#4a423a,#241f1b);color:#fff;box-shadow:0 26px 60px rgba(36,29,24,.28);isolation:isolate}
+.slot.has-img{background-size:cover;background-repeat:no-repeat}
+.slot::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.05) 40%,rgba(0,0,0,.5))}
+.slot{margin:0}
+.slot .ph{position:absolute;inset:0;background-size:cover;background-position:var(--pos,50% 50%);background-repeat:no-repeat;z-index:-2}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.09)}}
+.slot-in{display:flex;flex-direction:column;align-items:center;gap:12px;padding:16px;font-size:14px;font-weight:700;text-shadow:0 2px 10px rgba(0,0,0,.6)}
+.play{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.94);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4);}
+.play::after{content:"";margin-left:5px;border-left:21px solid var(--mustard-deep);border-block:13px solid transparent}
+@keyframes breathe{50%{transform:scale(1.08)}}
+.slot video,.phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:transparent}
+.v-tall{aspect-ratio:9/16;max-width:360px;width:100%}
+.v-wide{aspect-ratio:16/9;width:100%}
+
+/* aprende */
+.learn{padding-block:100px 40px;background:var(--paper)}
+.learn-head{display:flex;flex-direction:column;gap:16px;margin-bottom:54px}.learn-head h2{max-width:16em}
+.learn-grid{display:grid;grid-template-columns:360px 1fr;gap:56px;align-items:start}
+.learn-grid .v-tall{position:relative}
+.stack{display:flex;flex-direction:column;gap:20px}
+.block{padding:30px 32px;border-radius:26px;background:var(--mist);border:1px solid var(--line)}
+.block.live{background:var(--ink);color:#fff;border:0}
+.block h3{font-family:var(--f-display);font-weight:700;font-size:26px;letter-spacing:-.02em;margin-bottom:18px}
+.block.live h3{color:var(--sun)}
+.checks{display:flex;flex-direction:column;gap:14px}
+.checks li{display:grid;grid-template-columns:24px 1fr;gap:12px;font-size:17px;line-height:1.45;font-weight:500}
+.checks svg{width:22px;height:22px;margin-top:2px;color:#2fa84a}
+.block.live .checks svg{color:var(--sun)}
+.block.live p{color:rgba(255,255,255,.82);font-size:17px}
+
+/* 24h */
+.always{padding-block:70px 100px;background:var(--paper)}
+.always-grid{display:grid;grid-template-columns:auto 1fr;gap:clamp(36px,7vw,100px);align-items:center;justify-content:center}
+.phone{position:relative;width:300px;max-width:100%;aspect-ratio:9/18.6;padding:11px;border-radius:46px;background:linear-gradient(160deg,#3a322b,#14100d);box-shadow:0 40px 80px rgba(36,29,24,.35),inset 0 0 0 2px rgba(255,255,255,.08)}
+.phone .screen{position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#000}
+.phone .ph{position:absolute;inset:0;background-size:cover;background-position:var(--pos)}
+.phone video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.phone .notch{position:absolute;top:19px;left:50%;translate:-50% 0;width:84px;height:22px;border-radius:20px;background:#0b0907;z-index:2}
+@keyframes hover{to{transform:translateY(-12px) rotate(.6deg)}}
+.always h2{margin-block:16px 20px}
+.mini{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.mini div{flex:1 1 130px;padding:16px 18px;border-radius:18px;background:var(--cream);border:1px solid rgba(187,121,36,.25)}
+.mini b{display:block;font-family:var(--f-display);font-size:30px;line-height:1;letter-spacing:-.02em;color:var(--mustard-deep)}
+.mini span{display:block;margin-top:6px;font-weight:700;font-size:14px;color:var(--ink-soft)}
+
+/* mentora */
+.mentor{padding-block:0 100px;background:var(--paper)}
+.mentor-panel{position:relative;background:var(--mustard);color:#fff;border-radius:38px;overflow:hidden;padding:clamp(28px,5vw,60px)}
+.mentor-panel .sw{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.sw path{fill:none;stroke:rgba(255,255,255,.18);stroke-width:7;stroke-linecap:round}
+.mentor-cols{position:relative;display:grid;grid-template-columns:auto 1fr;gap:clamp(30px,5vw,70px);align-items:center}
+.polaroid{background:var(--sand);border-radius:22px;padding:12px 12px 14px;width:min(280px,100%);box-shadow:0 22px 44px rgba(0,0,0,.28);transform:rotate(-2.5deg);transition:transform .5s var(--ease)}
+.polaroid:hover{transform:rotate(0) scale(1.03)}
+.photo{aspect-ratio:3/4;border-radius:14px;background:var(--img3) 38% 8%/cover no-repeat,#3a2a1e}
+.polaroid span{display:block;margin:12px 0 0 4px;font-family:var(--f-display);font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+.mentor h2{color:#fff;margin-block:14px 18px}
+.mentor .eyebrow{color:var(--sun)}
+.mentor p{font-size:17px;line-height:1.55;color:rgba(255,255,255,.94)}
+.mentor p+p{margin-top:12px}
+.mentor p b{font-weight:800}
+.stats-m{display:flex;flex-wrap:wrap;gap:26px 44px;margin-top:30px;padding-top:26px;border-top:1px solid rgba(255,255,255,.28)}
+.stats-m b{display:block;font-family:var(--f-display);font-weight:700;font-size:clamp(34px,4vw,46px);line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stats-m span{display:block;margin-top:6px;font-weight:700;font-size:14px;opacity:.92}
+
+/* diferenciais */
+.diff{padding-block:20px 100px;background:var(--paper)}
+.diff h2{margin-block:16px 48px;max-width:12em}
+.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.dcard{padding:28px 24px 30px;border-radius:26px;display:flex;flex-direction:column;gap:14px;transition:transform .4s var(--ease)}
+.dcard:hover{transform:translateY(-10px)}
+.dcard:nth-child(odd){background:var(--cream);border:1px solid rgba(187,121,36,.3)}
+.dcard:nth-child(even){background:var(--mustard);color:#fff}
+.ico{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;background:var(--mustard);color:#fff}
+.dcard:nth-child(even) .ico{background:rgba(255,255,255,.2)}
+.ico svg{width:28px;height:28px;transition:transform .5s var(--ease)}
+.dcard:hover .ico svg{transform:rotate(-12deg) scale(1.15)}
+.dcard h3{font-family:var(--f-display);font-weight:700;font-size:20px;letter-spacing:-.02em;line-height:1.1}
+.dcard p{font-size:15.5px;line-height:1.5;opacity:.92}
+
+
+
+/* botão de inscrição (WhatsApp) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:16px 28px;border-radius:99px;background:var(--gold);color:var(--ink);font-family:var(--f-body);font-weight:800;font-size:17px;line-height:1.1;text-decoration:none;box-shadow:0 12px 30px rgba(237,195,57,.28);transition:transform .25s var(--ease),background .25s}
+.btn:hover{transform:translateY(-2px);background:var(--sun)}
+.btn svg{width:21px;height:21px;flex:none}
+.btn.sm{padding:10px 18px;font-size:14px;box-shadow:none}
+.btn.sm svg{width:18px;height:18px}
+.btn.dark{background:var(--ink);color:#fff;box-shadow:0 14px 34px rgba(28,23,19,.35)}
+.btn.dark:hover{background:var(--night);transform:translateY(-2px)}
+.cta-row{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin-top:34px}
+.cta-row small{font-size:14px;opacity:.75}
+.cta-center{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:48px;text-align:center}
+.cta-center small{font-size:14px;color:rgba(255,255,255,.7)}
+.endcta{padding-block:84px;background:var(--mustard);color:#fff}
+.endcta .wrap{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.endcta h2{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4.6vw,48px);line-height:1.06;letter-spacing:-.025em;text-wrap:balance;max-width:20ch}
+.endcta p{max-width:46ch;font-size:18px;opacity:.95;text-wrap:pretty}
+.endcta small{font-size:14px;opacity:.9}
+
+
+/* oferta 14/11 + contagem regressiva */
+:root{--ph:46px}
+.promo{position:fixed;inset:0 0 auto 0;z-index:55;display:flex;align-items:center;justify-content:center;gap:10px 22px;flex-wrap:nowrap;min-height:var(--ph);padding:calc(6px + env(safe-area-inset-top,0px)) 14px 6px;background:linear-gradient(90deg,#1c1713,#2b2118 50%,#1c1713);color:#fff;border-bottom:1px solid rgba(255,218,109,.35);font-weight:700;font-size:14px;line-height:1.2}
+.promo .pt{display:flex;align-items:center;gap:10px;min-width:0}
+.promo .pt b{color:var(--sun);font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:12.5px;white-space:nowrap}
+.promo .pt>span{white-space:nowrap}
+.promo .pt b .sm{display:none}
+.promo .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex:none;animation:blink 1.6s ease-in-out infinite}
+.cd{display:flex;align-items:stretch;gap:6px;font-variant-numeric:tabular-nums}
+.cd div{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:46px;padding:5px 7px;border-radius:9px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);line-height:1}
+.cd b{font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.01em}
+.cd small{margin-top:3px;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sun)}
+.promo .cd div{min-width:40px;padding:4px 6px}
+.promo a.go{flex:none;display:inline-flex;align-items:center;padding:7px 14px;border-radius:99px;background:var(--gold);color:var(--ink);font-weight:800;font-size:13px;text-decoration:none;white-space:nowrap}
+.promo a.go:hover{background:var(--sun)}
+.nav{inset:calc(var(--ph) + env(safe-area-inset-top,0px)) 0 auto 0!important;padding:14px 0!important}
+.nav.solid{padding-block:10px!important}
+.hero{padding-block:calc(150px + var(--ph)) 76px!important}
+html{scroll-padding-top:calc(76px + var(--ph))!important}
+.progress{z-index:70!important}
+.hotpill{display:inline-flex;align-items:center;gap:9px;padding:9px 16px;border-radius:99px;background:var(--gold);color:var(--ink);font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.hotpill i{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:blink 1.6s ease-in-out infinite}
+.hero .chips-row{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}
+.hero-offer{display:inline-flex;align-items:center;gap:12px;margin-top:22px;padding:12px 18px;border-radius:16px;background:rgba(255,218,109,.14);border:1px solid rgba(255,218,109,.5);color:#fff;font-weight:700;font-size:16px;line-height:1.3;max-width:34em}
+.hero-offer b{color:var(--sun)}
+.hero-offer svg{width:26px;height:26px;color:var(--sun);flex:none}
+/* faixa da oferta */
+.offer{position:relative;isolation:isolate;overflow:hidden;padding-block:96px;text-align:center;color:#fff;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(237,195,57,.32),transparent 70%),radial-gradient(ellipse 50% 60% at 100% 100%,rgba(187,121,36,.4),transparent 70%),var(--night)}
+.offer .tag{display:inline-flex;align-items:center;gap:10px;padding:9px 18px;border-radius:99px;background:var(--gold);color:var(--ink);font-weight:800;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.offer .tag i{width:8px;height:8px;border-radius:50%;background:var(--ink);animation:blink 1.6s ease-in-out infinite}
+.offer h2{margin:22px auto 0;max-width:15em;font-family:var(--f-display);font-weight:700;font-size:clamp(34px,5.6vw,60px);line-height:1.02;letter-spacing:-.03em;text-wrap:balance;font-variation-settings:"opsz" 96}
+.offer h2 em{font-style:normal;color:var(--sun)}
+.offer p.sub{margin:20px auto 0;max-width:46ch;font-size:clamp(17px,2vw,20px);color:rgba(255,255,255,.88)}
+.offer .cd{justify-content:center;gap:12px;margin-top:38px}
+.offer .cd div{min-width:clamp(66px,12vw,104px);padding:clamp(12px,2.2vw,20px) 8px;border-radius:20px;background:rgba(255,255,255,.08);border:1px solid rgba(255,218,109,.4)}
+.offer .cd b{font-size:clamp(34px,6.6vw,64px)}
+.offer .cd small{font-size:clamp(10px,1.4vw,12.5px);margin-top:8px}
+.offer .btn{margin-top:40px;font-size:18px;padding:19px 34px}
+.offer small.note{display:block;margin-top:16px;font-size:14px;color:rgba(255,255,255,.7)}
+.open-msg{display:none}
+.cd-open .open-msg{display:inline}
+.cd-open [data-before]{display:none!important}
+.endcta .cd{justify-content:center;margin-top:4px}
+.endcta .cd div{background:rgba(28,23,19,.28);border-color:rgba(255,255,255,.3)}
+.endcta .cd small{color:#fff}
+.endcta .when{display:inline-block;padding:7px 16px;border-radius:99px;background:var(--night);color:var(--sun);font-weight:800;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+@media (max-width:700px){
+  :root{--ph:42px}
+  .promo{gap:10px;padding-inline:10px;font-size:13px}
+  .promo .pt>span{display:none}
+  .promo .pt b .lg{display:none}
+  .promo .pt b .sm{display:inline}
+  .promo .cd div{min-width:34px;padding:3px 4px}
+  .promo .cd b{font-size:15px}
+  .promo .cd small{font-size:8.5px;margin-top:2px}
+  .promo a.go{display:none}
+  .promo .pt{flex:none}
+  .promo .cd{flex:none}
+  .hero{padding-block:calc(130px + var(--ph)) 60px!important}
+  .offer{padding-block:72px}
+  .offer .btn{width:100%}
+}
+@media (max-width:380px){.promo .pt b{font-size:11px}.promo a.go{display:none}}
+
+/* galeria de técnicas */
+.tech{margin-top:64px}
+.tech-head{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+.tech-head h3{font-family:var(--f-display);font-weight:600;font-size:clamp(26px,3.4vw,38px);line-height:1.08;letter-spacing:-.025em;text-wrap:balance}
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tcard{position:relative;margin:0;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:#3a2a1e;box-shadow:0 22px 50px rgba(36,29,24,.22);isolation:isolate}
+.tcard .ph{position:absolute;inset:0;z-index:-2;background-size:cover;background-repeat:no-repeat;background-position:var(--pos,50% 50%)}
+.tcard::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(28,23,19,0) 48%,rgba(28,23,19,.86))}
+.tcard figcaption{position:absolute;inset:auto 0 0 0;padding:20px 18px 20px;color:#fff;display:flex;flex-direction:column;gap:4px}
+.tcard figcaption b{font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.02em;line-height:1.1}
+.tcard figcaption span{font-size:14px;line-height:1.4;opacity:.88}
+.tcard .tag{position:absolute;left:14px;top:14px;padding:6px 11px;border-radius:99px;background:var(--gold);color:var(--ink);font-weight:800;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.tcard.more{background:var(--mustard)}
+.tcard.more::before{background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(0,0,0,.12))}
+.tcard.more .tag{background:var(--night);color:var(--sun)}
+/* miniaturas no bloco de técnicas */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.chip{text-transform:none;letter-spacing:0;display:inline-flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:99px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);font-weight:700;font-size:14px;color:#fff}
+.chip i{width:34px;height:34px;border-radius:50%;background-size:cover;background-position:var(--pos,50% 50%);flex:none}
+
+/* bento: o que está incluído */
+.incl{padding-block:90px 100px;background:var(--night);color:#fff}
+.incl .eyebrow{color:var(--sun)}
+.incl h2{margin-block:16px 46px;max-width:12em}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.tile{position:relative;overflow:hidden;padding:30px;border-radius:28px;background:#2a231d;border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:10px;justify-content:flex-end;min-height:210px;transition:transform .4s var(--ease),border-color .4s}
+.tile:hover{transform:translateY(-6px);border-color:rgba(255,218,109,.5)}
+.tile.s3{grid-column:span 3}.tile.s2{grid-column:span 2}
+.tile.gold{background:var(--gold);color:var(--ink);border:0}
+.tile.must{background:var(--mustard);border:0}
+.tile b{font-family:var(--f-display);font-weight:700;font-size:clamp(46px,6vw,78px);line-height:.95;letter-spacing:-.04em}
+.tile h3{font-family:var(--f-display);font-weight:700;font-size:clamp(22px,2.6vw,28px);line-height:1.12;letter-spacing:-.02em}
+.tile p{font-size:16px;line-height:1.45;opacity:.9;max-width:34ch}
+.tile .glow{position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.14)}
+
+/* dúvidas */
+.faq{padding-block:100px;background:var(--paper)}
+.faq-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+.faq h2{margin-top:16px}
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 4px;cursor:pointer;list-style:none;font-family:var(--f-display);font-weight:600;font-size:clamp(19px,2.4vw,23px);letter-spacing:-.015em;line-height:1.2}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--cream);color:var(--mustard-deep);font-size:24px;line-height:1;transition:transform .35s var(--ease),background .3s}
+details[open] summary::after{transform:rotate(135deg);background:var(--gold)}
+details p{padding:0 56px 26px 4px;color:var(--ink-soft);font-size:17px;animation:open .45s var(--ease)}
+@keyframes open{from{opacity:0;transform:translateY(-8px)}}
+
+/* rodapé */
+footer{background:var(--mustard);color:#fff;padding-block:64px 44px}
+.foot{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+.foot .logo{font-size:34px}.foot .logo svg{width:22px}
+.foot p.tag{margin-top:14px;max-width:34ch;font-weight:600;opacity:.92}
+.contact{display:flex;flex-direction:column;gap:8px;font-weight:600}
+.contact strong{font-weight:800;font-size:17px}
+.contact span{user-select:all}
+.foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px;margin-top:44px;padding-top:24px;border-top:1px solid rgba(255,255,255,.3);font-size:14px;font-weight:700}
+
+/* responsivo */
+@media (max-width:960px){
+  .always-grid{grid-template-columns:1fr;justify-items:center}
+  .always-grid>div:last-child{justify-self:stretch}
+  .diff-grid{grid-template-columns:1fr 1fr}
+  .method-grid,.always-grid,.faq-grid{grid-template-columns:1fr;gap:34px}
+  .learn-grid{grid-template-columns:1fr;gap:34px}
+  .tech{margin-top:48px}
+  .tech-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-20px;padding-inline:20px;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .tech-grid::-webkit-scrollbar{display:none}
+  .tcard{flex:0 0 min(300px,78%);scroll-snap-align:center}
+  .learn-grid .v-tall{position:relative;justify-self:center}
+  .bento{grid-template-columns:repeat(2,1fr)}
+  .tile.s3{grid-column:span 2}.tile.s2{grid-column:span 1}
+  .mentor-cols{grid-template-columns:1fr;justify-items:center}
+  .mentor-cols>div:last-child{justify-self:stretch}
+}
+@media (max-width:700px){
+  .nav ul{display:none}
+  .btn{padding:15px 22px;font-size:16px}
+  .for-grid,.foot{grid-template-columns:1fr}
+  .hero{padding-block:130px 60px}
+}
+@media (max-width:520px){
+  body{font-size:17px}
+  .diff-grid{grid-template-columns:1fr}
+  .bento{grid-template-columns:1fr}
+  .tile.s3,.tile.s2{grid-column:span 1}
+  .block{padding:24px 22px}
+  details p{padding-right:4px}
+  .stat{max-width:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .braids path{stroke-dashoffset:0}
+  .ticker-track{width:auto;flex-wrap:wrap}
+}
+</style>
+<style>:root{--img1:url(media-01.jpg);--img10:url(media-02.jpg);--img11:url(media-03.jpg);--img12:url(media-04.jpg);--img13:url(media-05.jpg);--img14:url(media-06.jpg);--img2:url(media-07.jpg);--img3:url(media-08.jpg);--img4:url(media-09.jpg);--img5:url(media-10.jpg);--img6:url(media-11.jpg);--img7:url(media-12.jpg);--img8:url(media-13.jpg);--img9:url(media-14.jpg);}</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="bg1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#f8dcb0"/><stop offset="1" stop-color="#fdeedb"/></linearGradient>
+    <symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7 12.4l3.2 3.3 6.4-6.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-live" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H10l-5 4v-4H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" fill="currentColor"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z" fill="currentColor"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z" fill="currentColor"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 7h6v6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z" fill="currentColor"/></symbol>
+    <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.6" fill="currentColor"/><circle cx="18" cy="6" r="2.6" fill="currentColor"/><path d="M8.6 18H15a3 3 0 0 0 0-6H9a3 3 0 0 1 0-6h6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-braid" viewBox="0 0 44 90"><circle cx="20" cy="13" r="11" fill="currentColor"/><path d="M12 22c-3 14 2 28 8 42 3 8 8 18 14 24 4-16 2-34-6-50-4-8-10-14-16-16z" fill="currentColor"/></symbol>
+  </defs>
+</svg>
+
+<div class="progress" id="progress" aria-hidden="true"></div>
+<div class="promo" id="promo" role="region" aria-label="Oferta especial de inscrição">
+  <div class="pt"><i class="dot" aria-hidden="true"></i><b><span class="lg" data-before>Inscrições abrem 14/11</span><span class="sm" data-before>Abre 14/11</span><span class="open-msg">Inscrições abertas</span></b><span>Oferta especial de inscrição</span></div>
+  <div class="cd" data-cd data-before aria-hidden="true"><div><b data-u="d">00</b><small>dias</small></div><div><b data-u="h">00</b><small>horas</small></div><div><b data-u="m">00</b><small>min</small></div><div><b data-u="s">00</b><small>seg</small></div></div>
+  <a class="go" href="https://wa.me/5531982431268?text=Ol%C3%A1%21%20Quero%20a%20oferta%20especial%20de%20inscri%C3%A7%C3%A3o%20do%20Trancista%20Academy%20%2814%2F11%29." target="_blank" rel="noopener" aria-label="Quero a oferta (abre o WhatsApp em nova aba)">Quero a oferta</a>
+</div>
+<nav class="nav" id="nav" aria-label="Navegação principal">
+  <div class="wrap">
+    <a class="logo" href="#topo"><svg viewBox="0 0 44 90" aria-hidden="true"><use href="#i-braid"/></svg>Braids Rafa</a>
+    <ul>
+      <li><a class="l" href="#aprende">O que você aprende</a></li>
+      <li><a class="l" href="#para-quem">Para quem é</a></li>
+      <li><a class="l" href="#mentora">Mentora</a></li>
+      <li><a class="l" href="#duvidas">Dúvidas</a></li>
+    </ul>
+    <a class="btn sm" href="https://wa.me/5531982431268?text=Ol%C3%A1%21%20Quero%20a%20oferta%20especial%20de%20inscri%C3%A7%C3%A3o%20do%20Trancista%20Academy%20%2814%2F11%29." target="_blank" rel="noopener" aria-label="Inscreva-se (abre o WhatsApp em nova aba)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A1.5 1.5 0 0 1 4 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9.5h7M8.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Inscreva-se</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="topo">
+  <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="auto" aria-hidden="true" tabindex="-1" src="media-15.mp4"></video>
+  <svg class="braids" viewBox="0 0 1355 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-20 560 C 320 400, 760 230, 1400 80"/>
+    <path d="M700 660 C 760 420, 980 330, 1200 380 C 1330 410, 1370 520, 1320 660"/>
+  </svg>
+  <div class="wrap">
+    <div class="chips-row rv"><span class="chip"><i></i>Método Trancista Academy</span><span class="hotpill"><i></i>Inscrições dia 14/11</span></div>
+    <h1 class="rv" data-d="1">Transforme seu talento em <em>liberdade</em></h1>
+    <p class="lead rv" data-d="2">A plataforma de formação para quem quer viver de tranças: técnica atualizada, acabamento de profissional e um método que você aplica no seu ritmo, de onde estiver.</p>
+    <div class="hero-offer rv" data-d="2"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spark"/></svg><span><b data-before style="display:inline">Oferta especial de inscrição no dia 14/11.</b><b class="open-msg">Inscrições abertas!</b> Chame a nossa equipe no WhatsApp e saiba como garantir a sua.</span></div>
+    <div class="cta-row rv" data-d="2"><a class="btn" href="https://wa.me/5531982431268?text=Ol%C3%A1%21%20Quero%20a%20oferta%20especial%20de%20inscri%C3%A7%C3%A3o%20do%20Trancista%20Academy%20%2814%2F11%29." target="_blank" rel="noopener" aria-label="Inscreva-se pelo WhatsApp (abre o WhatsApp em nova aba)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A1.5 1.5 0 0 1 4 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9.5h7M8.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Inscreva-se pelo WhatsApp</a></div>
+    <div class="stats-row">
+      <div class="stat rv" data-d="1"><b data-count="6" data-prefix="+" data-suffix=" mil">+6 mil</b><span>alunas formadas</span></div>
+      <div class="stat rv" data-d="2"><b data-count="13" data-prefix="+">+13</b><span>países com alunas</span></div>
+      <div class="stat rv" data-d="3"><b data-count="200" data-prefix="+">+200</b><span>horas de aula em vídeo</span></div>
+    </div>
+    <a class="cue" href="#metodo">Conheça o método <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</header>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+
+<main>
+<!-- MÉTODO -->
+<section class="method" id="metodo">
+  <div class="wrap method-grid">
+    <div class="rv">
+      <span class="eyebrow">O ponto de partida</span>
+      <h2 class="title">Talento você já tem. O que falta é método.</h2>
+    </div>
+    <div class="rv" data-d="1">
+      <p class="lead">Tutorial solto na internet mostra o penteado pronto, mas não mostra o caminho: por onde começar, como corrigir o erro e como chegar num acabamento que sustenta o seu trabalho de profissional.</p>
+      <p class="lead" style="margin-top:14px">O Trancista Academy organiza esse caminho em aulas práticas e teóricas, feitas por quem vive e ama trançar, com linguagem simples e direta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE APRENDE -->
+<section class="learn" id="aprende">
+  <div class="wrap">
+    <div class="learn-head">
+      <span class="eyebrow">Dentro da plataforma</span>
+      <h2 class="title rv">O que você aprende no Trancista Academy</h2>
+    </div>
+    <div class="learn-grid">
+      <figure class="slot v-tall"><div class="ph" style="--pos:50% 30%;background-image:var(--img3)" aria-hidden="true"></div><video class="loopv" data-src="media-16.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Detalhe de twists sendo mostrados na aula"></video></figure>
+      <div class="stack">
+        <div class="block rv">
+          <h3>Base sólida</h3>
+          <ul class="checks" id="list1"></ul>
+        </div>
+        <div class="block rv" data-d="1">
+          <h3>E não para por aí…</h3>
+          <ul class="checks" id="list2"></ul>
+        </div>
+        <div class="block live rv" data-d="2">
+          <h3>Aulas ao vivo</h3>
+          <p>Plantões de dúvidas e materiais de suporte para você não travar no meio do caminho.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tech">
+      <div class="tech-head">
+        <span class="eyebrow">Na prática</span>
+        <h3 class="rv">Técnicas que você domina, do fundamento ao acabamento</h3>
+      </div>
+      <div class="tech-grid">
+        <figure class="tcard rv"><div class="ph" style="--pos:50% 40%;background-image:var(--img4)" aria-hidden="true"></div><span class="tag">Tranças nagôs</span><figcaption><b>Divisões e simetria</b><span>Raízes limpas, linhas precisas e acabamento que sustenta o preço do seu serviço.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="1"><div class="ph" style="--pos:60% 55%;background-image:var(--img12)" aria-hidden="true"></div><span class="tag">Boxeadoras</span><figcaption><b>Do couro cabeludo às pontas</b><span>Tranças firmes e simétricas da raiz ao comprimento, com o acabamento que o modelo pede.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="2"><div class="ph" style="--pos:78% 62%;background-size:175%;background-image:var(--img13)" aria-hidden="true"></div><span class="tag">Twist</span><figcaption><b>Twists longos e uniformes</b><span>Torção regular do início ao fim, para um caimento leve e que dura.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="3"><div class="ph" style="--pos:55% 45%;background-image:var(--img7)" aria-hidden="true"></div><span class="tag">Crochet braids</span><figcaption><b>Aplicação com acabamento</b><span>Base de nagôs firme e aplicação limpa, para um volume leve e natural.</span></figcaption></figure>
+        <figure class="tcard rv"><div class="ph" style="--pos:45% 40%;background-image:var(--img6)" aria-hidden="true"></div><span class="tag">Box braids</span><figcaption><b>Box braids com precisão</b><span>Partição, tensão e comprimento uniforme para um resultado que se vê de longe.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="1"><div class="ph" style="--pos:40% 45%;background-image:var(--img5)" aria-hidden="true"></div><span class="tag">Boho braids</span><figcaption><b>Nagô com cachos soltos</b><span>Um dos modelos mais pedidos hoje, com os detalhes de acabamento.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="2"><div class="ph" style="--pos:55% 40%;background-image:var(--img11)" aria-hidden="true"></div><span class="tag">Tranças soltas</span><figcaption><b>Partição e pegada</b><span>Divisões em quadrados e tensão correta, com fibra de qualquer cor.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="3"><div class="ph" style="--pos:45% 50%;background-image:var(--img10)" aria-hidden="true"></div><span class="tag">Nagô com fibra</span><figcaption><b>Nagô com extensão</b><span>Una o cabelo natural à fibra e crie desenhos marcantes, sem peso na raiz.</span></figcaption></figure>
+        <figure class="tcard rv"><div class="ph" style="--pos:55% 60%;background-image:var(--img9)" aria-hidden="true"></div><span class="tag">Nagô criativo</span><figcaption><b>Desenhos que valorizam</b><span>Linhas curvas pensadas para o rosto e o estilo de cada cliente.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="1"><div class="ph" style="--pos:45% 45%;background-image:var(--img14)" aria-hidden="true"></div><span class="tag">Desenhos</span><figcaption><b>Trançados entrelaçados</b><span>Padrões que se cruzam e se encontram, para entregar um visual único.</span></figcaption></figure>
+        <figure class="tcard rv" data-d="2"><div class="ph" style="--pos:50% 50%;background-image:var(--img8)" aria-hidden="true"></div><span class="tag">Tipos capilares</span><figcaption><b>Preparo e textura</b><span>Entenda o fio da cliente, divida e prepare o cabelo antes de começar.</span></figcaption></figure>
+        <figure class="tcard more rv" data-d="3"><span class="tag">E tem mais</span><figcaption><b>Dreads e história das tranças</b><span>Mais de 40 horas de aulas com tudo o que o mercado pede hoje, e a origem de cada técnica.</span></figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section class="for" id="para-quem">
+  <div class="wrap">
+    <span class="eyebrow">Para quem é</span>
+    <h2 class="title rv">O Trancista Academy é para você que:</h2>
+    <div class="for-grid">
+      <article class="pcard rv">
+        <div class="level"><i class="on"></i><i></i><i></i><i></i><b>Começando</b></div>
+        <h3>Nunca trançou na vida</h3>
+        <p>Quer aprender do zero com uma metodologia didática, pensada para quem nunca soube trançar.</p>
+      </article>
+      <article class="pcard rv" data-d="1">
+        <div class="level"><i class="on"></i><i class="on"></i><i></i><i></i><b>Perdida</b></div>
+        <h3>Cansou de tutorial sem resultado</h3>
+        <p>Não faz ideia de como começar e está cansada de assistir vídeo atrás de vídeo sem sucesso.</p>
+      </article>
+      <article class="pcard rv" data-d="1">
+        <div class="level"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><b>Refinando</b></div>
+        <h3>Já trança, mas falta refino</h3>
+        <p>Sabe fazer tranças, mas ainda não tem o refino técnico para ser reconhecida como profissional.</p>
+      </article>
+      <article class="pcard rv" data-d="2">
+        <div class="level"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><b>Ampliando</b></div>
+        <h3>Quer fazer qualquer modelo</h3>
+        <p>Tem o conhecimento básico e quer desenvolver as habilidades para fazer qualquer modelo que o mercado pede.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- OFERTA 14/11 -->
+<section class="offer" id="oferta" aria-labelledby="ofertaT">
+  <div class="wrap">
+    <span class="tag rv"><i></i>Oferta especial de inscrição</span>
+    <h2 class="rv" id="ofertaT" data-d="1"><span data-before style="display:inline">As inscrições oficiais do Trancista Academy abrem dia <em>14 de novembro</em></span><span class="open-msg">As inscrições do Trancista Academy <em>estão abertas</em></span></h2>
+    <p class="sub rv" data-d="2">Chame a nossa equipe no WhatsApp e saiba como garantir a sua condição especial de inscrição. A gente conversa com você 1 a 1 e tira todas as suas dúvidas.</p>
+    <div class="cd rv" data-cd data-before data-d="2" role="timer" aria-label="Contagem regressiva para 14 de novembro"><div><b data-u="d">00</b><small>dias</small></div><div><b data-u="h">00</b><small>horas</small></div><div><b data-u="m">00</b><small>minutos</small></div><div><b data-u="s">00</b><small>segundos</small></div></div>
+    <div class="rv" data-d="2"><a class="btn" href="https://wa.me/5531982431268?text=Ol%C3%A1%21%20Quero%20a%20oferta%20especial%20de%20inscri%C3%A7%C3%A3o%20do%20Trancista%20Academy%20%2814%2F11%29." target="_blank" rel="noopener" aria-label="Quero a oferta especial pelo WhatsApp (abre o WhatsApp em nova aba)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A1.5 1.5 0 0 1 4 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9.5h7M8.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Inscreva-se pelo WhatsApp</a></div>
+    <small class="note rv" data-d="2">Atendimento 1 a 1 pelo WhatsApp.</small>
+  </div>
+</section>
+
+<!-- 24H -->
+<section class="always">
+  <div class="wrap always-grid">
+    <div class="phone" aria-hidden="false"><div class="screen"><div class="ph" style="--pos:50% 30%;background-image:var(--img2)" aria-hidden="true"></div><video class="loopv" data-src="media-17.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Aluna assistindo a uma aula no celular"></video></div><i class="notch"></i></div>
+    <div class="rv" data-d="1">
+      <span class="eyebrow">No seu ritmo</span>
+      <h2 class="title">Aulas 24h disponíveis</h2>
+      <p class="lead">Na palma da sua mão para aprender ou revisar suas principais dúvidas sempre que precisar. Sem fila, sem horário marcado.</p>
+      <div class="mini">
+        <div><b>24h</b><span>de acesso por dia</span></div>
+        <div><b>12</b><span>meses de acesso</span></div>
+        <div><b>+40h</b><span>de conteúdo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENTORA -->
+<section class="mentor" id="mentora">
+  <div class="wrap">
+    <div class="mentor-panel rv">
+      <svg class="sw" viewBox="0 0 1000 520" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 450 C 250 330, 560 120, 1030 30"/><path d="M340 520 C 330 320, 520 240, 700 290 C 850 330, 830 450, 760 530"/></svg>
+      <div class="mentor-cols">
+        <div class="polaroid">
+          <div class="photo" role="img" aria-label="Rafa Xavier sorrindo, de lado, durante uma aula"></div>
+          <span>Rafa Xavier</span>
+        </div>
+        <div>
+          <span class="eyebrow">Conheça a sua mentora</span>
+          <h2 class="title">Rafa Xavier</h2>
+          <p><b>Trancista, historiadora, empresária, TEDx Speaker e vencedora do Shark Tank Brasil Creators.</b></p>
+          <p>Criadora do Método Trancista Academy, lidera um dos salões mais respeitados do país e treina trancistas por todo o Brasil que querem transformar talento em liberdade financeira.</p>
+          <p>Sua missão é ensinar com leveza e profundidade como o ofício das tranças pode mudar vidas, empoderar mulheres e fortalecer a estética negra como potência empreendedora.</p>
+          <div class="stats-m">
+            <div><b data-count="6" data-prefix="+" data-suffix=" mil">+6 mil</b><span>alunas formadas</span></div>
+            <div><b data-count="13" data-prefix="+">+13</b><span>países com alunas</span></div>
+            <div><b data-count="200" data-prefix="+">+200</b><span>horas de aula em vídeo</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diff">
+  <div class="wrap">
+    <span class="eyebrow">Por que é diferente</span>
+    <h2 class="title rv">Uma plataforma pensada para quem trança</h2>
+    <div class="diff-grid">
+      <article class="dcard rv"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spark"/></svg></div><h3>Plataforma viva</h3><p>Sempre atualizada com as novas tendências e técnicas do mercado.</p></article>
+      <article class="dcard rv" data-d="1"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-up"/></svg></div><h3>Evolução constante</h3><p>O seu espaço de evolução, com aulas práticas e teóricas.</p></article>
+      <article class="dcard rv" data-d="2"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg></div><h3>Acessível</h3><p>Um ambiente feito por quem vive e ama trançar, com linguagem simples e prática.</p></article>
+      <article class="dcard rv" data-d="3"><div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-route"/></svg></div><h3>Caminho direto</h3><p>O caminho mais direto para viver de tranças com liberdade, segurança e valorização.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE ESTÁ INCLUÍDO -->
+<section class="incl" id="incluido">
+  <div class="wrap">
+    <span class="eyebrow">Tudo isso…</span>
+    <h2 class="title rv">O que você leva no Trancista Academy</h2>
+    <div class="bento">
+      <article class="tile s3 gold rv"><div class="glow"></div><b>+40h</b><h3>de conteúdo passo a passo</h3><p>Detalhado, com todos os modelos atuais do mercado.</p></article>
+      <article class="tile s3 rv" data-d="1"><h3>Técnicas completas</h3><p>Fundamentos de métodos atualizados para tranças soltas, tranças nagôs, twist, dreads e crochet braids.</p><div class="chips" aria-hidden="true"><span class="chip"><i style="background-image:var(--img4);--pos:50% 40%"></i>Nagôs</span><span class="chip"><i style="background-image:var(--img5);--pos:40% 45%"></i>Boho braids</span><span class="chip"><i style="background-image:var(--img6);--pos:45% 35%"></i>Box braids</span><span class="chip"><i style="background-image:var(--img7);--pos:55% 45%"></i>Crochet braids</span></div></article>
+      <article class="tile s2 rv"><h3>Comunidade de alunas</h3><p>Tire dúvidas ao vivo com o nosso time e com trancistas espalhadas pelo mundo.</p></article>
+      <article class="tile s2 must rv" data-d="1"><b>12</b><h3>meses de acesso</h3></article>
+      <article class="tile s2 rv" data-d="2"><h3>História das tranças</h3><p>Aula completa e acesso a todos os plantões de dúvidas das turmas anteriores.</p></article>
+    </div>
+    <div class="cta-center rv"><a class="btn" href="https://wa.me/5531982431268?text=Ol%C3%A1%21%20Quero%20a%20oferta%20especial%20de%20inscri%C3%A7%C3%A3o%20do%20Trancista%20Academy%20%2814%2F11%29." target="_blank" rel="noopener" aria-label="Inscreva-se pelo WhatsApp (abre o WhatsApp em nova aba)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A1.5 1.5 0 0 1 4 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9.5h7M8.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Inscreva-se pelo WhatsApp</a><small>Você será direcionada para o nosso WhatsApp.</small></div>
+  </div>
+</section>
+
+<!-- DÚVIDAS -->
+<section class="faq" id="duvidas">
+  <div class="wrap faq-grid">
+    <div class="rv"><span class="eyebrow">Dúvidas frequentes</span><h2 class="title">Antes de começar</h2></div>
+    <div class="rv" data-d="1">
+      <details><summary>Nunca trancei na vida. Posso começar?</summary><p>Pode. A formação começa nos fundamentos, com metodologia pensada para quem nunca soube trançar, e segue passo a passo até os modelos mais atuais.</p></details>
+      <details><summary>Já faço tranças. Ainda faz sentido?</summary><p>Faz. Há conteúdo de refino técnico, finalização, simetria e divisões nos mais diferentes penteados, além de mais de 20 tutoriais de twists, dreads, boho braids e outros.</p></details>
+      <details><summary>Por quanto tempo tenho acesso?</summary><p>Você tem 12 meses de acesso, com aulas disponíveis 24 horas por dia para assistir ou rever quando precisar.</p></details>
+      <details><summary>E se eu travar em alguma técnica?</summary><p>Você conta com a comunidade de alunas, o nosso time e trancistas do mundo todo para tirar dúvidas, além das aulas ao vivo e do acesso aos plantões das turmas anteriores.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- CHAMADA FINAL -->
+<section class="endcta" id="inscricao">
+  <div class="wrap">
+    <span class="when rv" data-before>Inscrições abrem dia 14/11</span>
+    <h2 class="rv">Pronta para viver de tranças com método?</h2>
+    <p class="rv" data-d="1">Fale com a nossa equipe no WhatsApp, tire suas dúvidas e saiba como garantir a oferta especial de inscrição do Trancista Academy.</p>
+    <div class="cd rv" data-cd data-before data-d="1" aria-hidden="true"><div><b data-u="d">00</b><small>dias</small></div><div><b data-u="h">00</b><small>horas</small></div><div><b data-u="m">00</b><small>min</small></div><div><b data-u="s">00</b><small>seg</small></div></div>
+    <div class="rv" data-d="2"><a class="btn dark" href="https://wa.me/5531982431268?text=Ol%C3%A1%21%20Quero%20a%20oferta%20especial%20de%20inscri%C3%A7%C3%A3o%20do%20Trancista%20Academy%20%2814%2F11%29." target="_blank" rel="noopener" aria-label="Inscreva-se pelo WhatsApp (abre o WhatsApp em nova aba)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A1.5 1.5 0 0 1 4 14.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 9.5h7M8.5 12h4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>Inscreva-se pelo WhatsApp</a></div>
+    <small class="rv" data-d="2">Atendimento direto com o nosso time.</small>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <div class="logo"><svg viewBox="0 0 44 90" aria-hidden="true"><use href="#i-braid"/></svg>Braids Rafa</div>
+        <p class="tag">Formação para trancistas que querem viver de tranças com liberdade, segurança e valorização.</p>
+      </div>
+      <div class="contact">
+        <strong>Quer entrar em contato?</strong>
+        <span>WhatsApp: +55 31 98243-1268</span>
+        <span>E-mail: contato@rafaxavier.com.br</span>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Braids Rafa. Todos os direitos reservados.</span>
+      <span>Política de Privacidade</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var CK = '<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>';
+
+  function fill(id, items){ document.getElementById(id).innerHTML = items.map(function(t){ return '<li>'+CK+'<span>'+t+'</span></li>'; }).join(''); }
+  fill('list1',[
+    'Fundamentos básicos para quem está saindo do zero',
+    'Noções dos tipos capilares e guia dos melhores materiais e utensílios para trançar',
+    'História das tranças e da cultura afro-brasileira',
+    'Tutorial de cuidados pré e pós tranças',
+    'Movimentos iniciais e estratégias para corrigir seus principais erros'
+  ]);
+  fill('list2',[
+    'Passo a passo para alimentação e camuflagem de tranças nagôs (tranças viradas)',
+    'Estratégias de finalização, simetria e divisões nos mais diferentes penteados',
+    'Tutorial atualizado de twists, dreads, boho braids e outros, com mais de 20 tutoriais dos diferentes penteados'
+  ]);
+
+  /* faixa em movimento (conteúdo duplicado para o loop) */
+  var words = ['Fundamentos','Tranças nagôs','Twists','Dreads','Boho braids','Crochet braids','Acabamento','Simetria','Tipos capilares','História das tranças','Aulas ao vivo','Comunidade','Oferta especial dia 14/11'];
+  var tk = document.getElementById('ticker');
+  var one = words.map(function(w){ return '<span>'+w+'</span>'; }).join('');
+  tk.innerHTML = one + one;
+
+  /* vídeos: sempre sem som; tocam só quando aparecem na tela */
+  function prep(v){
+    if(v.__ready) return; v.__ready = true;
+    var d = v.getAttribute('data-src'); if(!d) return;
+    v.muted = true; v.defaultMuted = true; v.setAttribute('muted','');
+    v.src = d; v.removeAttribute('data-src');
+  }
+  function play(v){ var p = v.play(); if(p && p.catch) p.catch(function(){}); }
+
+  /* vídeo de fundo do topo: igual à versão original, sempre mudo */
+  var hv = document.getElementById('heroVideo');
+  if(hv){ hv.muted = true; hv.defaultMuted = true;
+    if(reduce){ hv.removeAttribute('autoplay'); hv.pause(); hv.style.display='none'; }
+    else { var pp = hv.play(); if(pp && pp.catch) pp.catch(function(){}); } }
+
+  /* vídeos das aulas: só carregam e tocam quando chegam perto da tela, sempre sem som */
+  var loops = Array.prototype.slice.call(document.querySelectorAll('video.loopv'));
+  loops.forEach(function(v){ v.muted = true; v.defaultMuted = true; });
+  if(reduce){ loops.forEach(function(v){ v.removeAttribute('autoplay'); }); }
+  else if('IntersectionObserver' in window){
+    var io3 = new IntersectionObserver(function(es){ es.forEach(function(e){
+      var v = e.target;
+      if(e.isIntersecting){ prep(v); play(v); } else if(!v.paused){ v.pause(); }
+    }); },{threshold:0,rootMargin:'200px 0px'});
+    loops.forEach(function(v){ io3.observe(v); });
+  } else { loops.forEach(function(v){ prep(v); play(v); }); }
+
+  /* âncoras com rolagem suave (sem scroll-behavior global) */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(ev){
+      var t = document.getElementById(a.getAttribute('href').slice(1));
+      if(!t) return; ev.preventDefault();
+      t.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'});
+    });
+  });
+
+  /* revelar ao rolar */
+  var rv = document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window && !reduce){
+    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.12});
+    rv.forEach(function(el){ io.observe(el); });
+  } else { rv.forEach(function(el){ el.classList.add('in'); }); }
+
+  /* contadores */
+  function run(el){
+    var to = +el.getAttribute('data-count'), p = el.getAttribute('data-prefix')||'', s = el.getAttribute('data-suffix')||'';
+    if(reduce){ el.textContent = p+to+s; return; }
+    var t0 = null;
+    function step(t){ if(!t0) t0 = t; var k = Math.min(1,(t-t0)/1600); k = 1-Math.pow(1-k,3); el.textContent = p+Math.round(to*k)+s; if(k<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
+  if('IntersectionObserver' in window){
+    var io2 = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ run(e.target); io2.unobserve(e.target); } }); },{threshold:.4});
+    document.querySelectorAll('[data-count]').forEach(function(el){ io2.observe(el); });
+  }
+
+  /* barra de progresso e navegação */
+  var nav = document.getElementById('nav'), bar = document.getElementById('progress'), tick = false;
+  function onScroll(){
+    var y = window.scrollY, h = document.documentElement.scrollHeight - window.innerHeight;
+    nav.classList.toggle('solid', y > 40);
+    bar.style.transform = 'scaleX('+(h>0 ? Math.min(1,y/h) : 0)+')';
+    tick = false;
+  }
+  window.addEventListener('scroll', function(){ if(!tick){ tick = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  onScroll();
+
+  /* contagem regressiva até 14/11/2026 00:00 (horário de Brasília) */
+  var TARGET = new Date('2026-11-14T00:00:00-03:00').getTime();
+  var cdEls = [].slice.call(document.querySelectorAll('[data-cd]'));
+  function pad(n){ return n<10 ? '0'+n : ''+n; }
+  function tickCd(){
+    var diff = TARGET - Date.now();
+    if(diff <= 0){ document.body.classList.add('cd-open'); document.documentElement.classList.add('cd-open'); clearInterval(cdTimer); return; }
+    var d = Math.floor(diff/86400000), h = Math.floor(diff%86400000/3600000), m = Math.floor(diff%3600000/60000), sec = Math.floor(diff%60000/1000);
+    cdEls.forEach(function(el){
+      el.querySelector('[data-u="d"]').textContent = pad(d);
+      el.querySelector('[data-u="h"]').textContent = pad(h);
+      el.querySelector('[data-u="m"]').textContent = pad(m);
+      el.querySelector('[data-u="s"]').textContent = pad(sec);
+    });
+  }
+  var cdTimer = setInterval(tickCd, 1000); tickCd();
+
+})();
+</script>
+
+</body></html>
