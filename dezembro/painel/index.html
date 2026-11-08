@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="description" content="Painel da aluna do Workshop Dezembro de Ouro.">
+<title>Painel Dezembro de Ouro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,700;1,6..96,500&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* layout: painel da aluna; topo com progresso, navegação fixa por seções, ferramentas interativas (agenda, preço, estoque) e bibliotecas de mensagens/conteúdo */
+  :root{
+    --fundo:#fbf7ef;
+    --papel:#f3e9d5;
+    --cartao:#fffdf8;
+    --vinho:#5a1a22;
+    --ouro:#a8771f;
+    --ouro-esc:#8a6420;
+    --mel:#e4c27a;
+    --texto:#2a1c12;
+    --texto-2:#6b5646;
+    --linha:rgba(138,100,32,.24);
+    --ok:#3f7a4a;
+    --font-display:'Bodoni Moda','Didot','Bodoni 72',Georgia,serif;
+    --font-body:'Work Sans','Helvetica Neue',Arial,sans-serif;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
+  body{margin:0;background:var(--fundo);color:var(--texto);font-family:var(--font-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+  h1,h2,h3{font-family:var(--font-display);font-weight:500;margin:0;text-wrap:balance}
+  h2{font-size:clamp(1.7rem,4vw,2.4rem);line-height:1.12}
+  h2 em,h1 em{font-style:italic;color:var(--ouro)}
+  h3{font-size:1.2rem;line-height:1.25}
+  p{margin:0}
+  .eyebrow{font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ouro);margin:0 0 10px}
+  .muted{color:var(--texto-2)}
+  button,input{font:inherit}
+  a{color:inherit}
+
+  /* TOPO */
+  .topo{padding-block:40px 32px;background:radial-gradient(70% 90% at 90% 0%,rgba(214,165,74,.22),transparent 70%)}
+  .topo-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:28px;align-items:end}
+  .topo-grid > *{min-width:0}
+  .topo h1{font-size:clamp(2.6rem,7vw,4.4rem);line-height:.95;margin-bottom:14px}
+  .topo .lede{color:var(--texto-2);max-width:46ch}
+  .progresso{background:var(--cartao);border:1px solid var(--linha);border-radius:20px;padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center}
+  .anel{width:84px;height:84px}
+  .anel circle{fill:none;stroke-width:8}
+  .anel .fundo-anel{stroke:var(--papel)}
+  .anel .valor{stroke:var(--ouro);stroke-linecap:round;transition:stroke-dashoffset .4s ease;transform:rotate(-90deg);transform-origin:50% 50%}
+  .anel text{font-family:var(--font-display);font-size:22px;fill:var(--texto);text-anchor:middle;dominant-baseline:central}
+  .progresso b{display:block;font-family:var(--font-display);font-size:1.25rem;font-weight:500}
+  .progresso small{color:var(--texto-2);font-size:.86rem}
+  .chips-info{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--linha);border-radius:999px;padding:6px 12px;font-size:.84rem;background:var(--cartao)}
+  .chip.gold{background:var(--ouro);border-color:var(--ouro);color:#fffaf0;font-weight:600}
+
+  /* NAV */
+  .nav{position:sticky;top:0;z-index:30;background:rgba(251,247,239,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-block:1px solid var(--linha);padding-top:env(safe-area-inset-top,0px)}
+  .nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
+  .nav .wrap::-webkit-scrollbar{display:none}
+  .nav a{flex:none;text-decoration:none;font-size:.88rem;font-weight:600;padding:8px 14px;border-radius:999px;color:var(--texto-2);border:1px solid transparent;white-space:nowrap}
+  .nav a:hover,.nav a.ativo{background:var(--cartao);border-color:var(--linha);color:var(--texto)}
+  .nav a:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+
+  section{padding-block:56px;border-bottom:1px solid var(--linha)}
+  section:nth-of-type(even){background:var(--papel)}
+  .sec-head{display:grid;gap:10px;margin-bottom:28px;max-width:62ch}
+  .sec-head p{color:var(--texto-2)}
+
+  .card{background:var(--cartao);border:1px solid var(--linha);border-radius:18px;padding:20px}
+
+  /* MAPA 15 DIAS */
+  .dias{display:grid;gap:8px}
+  .dia{display:grid;grid-template-columns:auto 64px 1fr auto;gap:14px;align-items:center;background:var(--cartao);border:1px solid var(--linha);border-radius:14px;padding:12px 14px;transition:opacity .2s ease}
+  .dia.feito{opacity:.62}
+  .dia.feito .tarefa{text-decoration:line-through;text-decoration-color:var(--mel)}
+  .dia .data{font-family:var(--font-display);line-height:1.05}
+  .dia .data b{display:block;font-size:1.35rem;font-weight:500}
+  .dia .data small{font-family:var(--font-body);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ouro)}
+  .tarefa{min-width:0}
+  .ir{font-size:.82rem;font-weight:600;color:var(--ouro-esc);text-decoration:none;white-space:nowrap}
+  .ir:hover{text-decoration:underline}
+  .check{appearance:none;-webkit-appearance:none;width:26px;height:26px;border:1.6px solid var(--ouro);border-radius:8px;display:grid;place-content:center;cursor:pointer;background:var(--cartao);margin:0}
+  .check::after{content:"";width:12px;height:7px;border-left:2.4px solid #fffaf0;border-bottom:2.4px solid #fffaf0;transform:rotate(-45deg) translate(1px,-1px);opacity:0}
+  .check:checked{background:var(--ouro)}
+  .check:checked::after{opacity:1}
+  .check:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+  .dia.descanso{background:transparent;border-style:dashed}
+  @media (max-width:640px){
+    .dia{grid-template-columns:auto 52px 1fr;row-gap:4px}
+    .dia .ir{grid-column:3}
+    .dia .data b{font-size:1.15rem}
+  }
+
+  /* AGENDA */
+  .agenda-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
+  .agenda-grid > *{min-width:0}
+  .pinceis{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .pincel{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--linha);background:var(--cartao);border-radius:999px;padding:7px 14px;font-size:.88rem;font-weight:600;cursor:pointer;color:var(--texto)}
+  .pincel i{width:14px;height:14px;border-radius:4px;display:inline-block}
+  .pincel[aria-pressed="true"]{border-color:var(--ouro);box-shadow:0 0 0 2px rgba(168,119,31,.25)}
+  .cal7{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+  .dow{text-align:center;font-size:.7rem;letter-spacing:.08em;color:var(--texto-2);padding-bottom:4px}
+  .dd{aspect-ratio:1;border-radius:9px;border:1px solid var(--linha);background:var(--cartao);font-size:.9rem;font-variant-numeric:tabular-nums;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--texto);padding:0;position:relative}
+  .dd small{font-size:.56rem;letter-spacing:.04em;line-height:1;margin-top:2px}
+  .dd.trabalho{background:linear-gradient(160deg,#f3dfb0,var(--mel));border-color:transparent}
+  .dd.folga{background:var(--fundo);border-style:dashed;color:var(--texto-2)}
+  .dd.festa{outline:1.5px solid var(--vinho);outline-offset:-1.5px}
+  .dd:focus-visible{outline:2px solid var(--ouro);outline-offset:1px}
+  .campos{display:grid;gap:14px}
+  .campo{display:grid;gap:6px}
+  .campo label{font-size:.88rem;font-weight:600}
+  .campo .dica{font-size:.8rem;color:var(--texto-2)}
+  .campo input{width:100%;border:1px solid var(--linha);border-radius:12px;padding:11px 12px;background:var(--cartao);color:var(--texto);font-variant-numeric:tabular-nums}
+  .campo input:focus{outline:2px solid var(--ouro);outline-offset:0;border-color:transparent}
+  .resumo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:6px}
+  .stat{background:var(--fundo);border:1px solid var(--linha);border-radius:14px;padding:12px}
+  .stat small{display:block;font-size:.74rem;color:var(--texto-2);letter-spacing:.04em}
+  .stat b{font-family:var(--font-display);font-size:1.6rem;font-weight:500;font-variant-numeric:tabular-nums}
+  .stat.destaque{background:var(--ouro);border-color:var(--ouro);color:#fffaf0}
+  .stat.destaque small{color:rgba(255,250,240,.85)}
+  @media (max-width:820px){.agenda-grid{grid-template-columns:1fr}}
+
+  /* PREÇO */
+  .fluxo{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:22px;counter-reset:passo}
+  .passo{background:var(--cartao);border:1px solid var(--linha);border-radius:16px;padding:16px;position:relative}
+  .passo::before{counter-increment:passo;content:counter(passo);font-family:var(--font-display);font-size:1.8rem;color:var(--ouro);line-height:1;display:block;margin-bottom:6px}
+  .passo h3{font-size:1.05rem;margin-bottom:4px}
+  .passo p{font-size:.88rem;color:var(--texto-2)}
+  .formula{font-size:.92rem;background:var(--fundo);border:1px dashed var(--ouro);border-radius:14px;padding:12px 14px;margin-bottom:22px;color:var(--texto)}
+  .preco-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .preco-grid > *{min-width:0}
+  .tabela-wrap{overflow-x:auto;margin-top:16px;border:1px solid var(--linha);border-radius:14px;background:var(--cartao)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:.9rem}
+  th,td{padding:10px 10px;border-bottom:1px solid var(--linha);text-align:left;vertical-align:middle}
+  th{font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--texto-2);font-weight:600;background:var(--fundo)}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  td input{width:100%;min-width:70px;border:1px solid var(--linha);border-radius:9px;padding:7px 8px;background:var(--fundo);color:var(--texto)}
+  td input.nome{min-width:130px}
+  td b{font-family:var(--font-display);font-weight:500;font-size:1.05rem}
+  .rm{border:0;background:none;color:var(--texto-2);cursor:pointer;font-size:1.2rem;padding:4px 8px;border-radius:8px}
+  .rm:hover{background:var(--papel)}
+  .add{margin-top:12px;border:1px dashed var(--ouro);background:transparent;color:var(--ouro-esc);font-weight:600;border-radius:999px;padding:9px 16px;cursor:pointer}
+  .aviso{font-size:.84rem;color:var(--texto-2);margin-top:12px}
+  @media (max-width:860px){.fluxo{grid-template-columns:repeat(2,minmax(0,1fr))}.preco-grid{grid-template-columns:1fr}}
+
+  /* MENSAGENS */
+  .linha-fluxo{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-bottom:22px;font-size:.82rem}
+  .linha-fluxo a{text-decoration:none;background:var(--cartao);border:1px solid var(--linha);border-radius:999px;padding:5px 11px;font-weight:600;color:var(--texto)}
+  .linha-fluxo span{color:var(--ouro)}
+  .msgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .msg{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .msg .topo-msg{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+  .msg .quando{font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ouro)}
+  .bolha{background:#e7f3df;border-radius:4px 16px 16px 16px;padding:12px 14px;font-size:.92rem;white-space:pre-line;color:#1f2a1c;line-height:1.5}
+  .copiar{flex:none;border:1px solid var(--linha);background:var(--fundo);border-radius:999px;padding:6px 12px;font-size:.8rem;font-weight:600;cursor:pointer;color:var(--texto)}
+  .copiar.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+  .copiar:focus-visible{outline:2px solid var(--ouro);outline-offset:2px}
+  @media (max-width:760px){.msgs{grid-template-columns:1fr}}
+
+  /* CONTEÚDO */
+  .semanas{display:grid;gap:14px}
+  .semana{display:grid;grid-template-columns:200px 1fr;gap:18px}
+  .semana > *{min-width:0}
+  .semana .rot b{display:block;font-family:var(--font-display);font-size:1.25rem;font-weight:500;line-height:1.2;margin-top:2px}
+  .semana .rot small{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ouro);font-weight:600}
+  .posts{display:grid;gap:8px}
+  .post{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start;padding:10px 0;border-top:1px solid var(--linha)}
+  .post:first-child{border-top:0;padding-top:0}
+  .fmt{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:8px;padding:4px 8px;text-align:center;background:var(--papel);color:var(--ouro-esc)}
+  .fmt.reels{background:var(--vinho);color:#f6ecd9}
+  .fmt.carrossel{background:var(--ouro);color:#fffaf0}
+  .post p{font-size:.92rem}
+  .post .cta{display:block;font-size:.82rem;color:var(--texto-2);margin-top:2px}
+  @media (max-width:700px){.semana{grid-template-columns:1fr;gap:10px}.post{grid-template-columns:1fr;gap:6px}.fmt{justify-self:start}}
+
+  /* STORIES */
+  .seqs{display:grid;gap:22px}
+  .seqs > div{min-width:0}
+  .seq-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+  .telas{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,170px);gap:10px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x mandatory}
+  .tela{scroll-snap-align:start;aspect-ratio:9/16;border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:8px;background:linear-gradient(170deg,#fffaf0,var(--papel));border:1px solid var(--linha);position:relative}
+  .tela .n{font-size:.68rem;font-weight:700;letter-spacing:.1em;color:var(--ouro)}
+  .tela p{font-family:var(--font-display);font-size:1rem;line-height:1.25}
+  .tela .rec{margin-top:auto;font-size:.72rem;font-weight:600;color:var(--texto-2);border-top:1px dashed var(--linha);padding-top:8px}
+  .tela.forte{background:linear-gradient(170deg,var(--vinho),#3e1118);border-color:transparent}
+  .tela.forte p{color:#f6ecd9}
+  .tela.forte .rec{color:var(--mel);border-color:rgba(228,194,122,.35)}
+
+  /* ESTOQUE */
+  .extras{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:22px}
+  .extra{display:flex;gap:10px;align-items:center;background:var(--cartao);border:1px solid var(--linha);border-radius:12px;padding:10px 12px;font-size:.9rem}
+  .extra .check{width:22px;height:22px;border-radius:7px}
+  @media (max-width:760px){.extras{grid-template-columns:1fr 1fr}}
+  @media (max-width:460px){.extras{grid-template-columns:1fr}}
+
+  /* CHECKLIST */
+  .blocos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  .bloco h3{margin-bottom:10px}
+  .bloco h3 span{color:var(--ouro);margin-right:6px}
+  .item-ck{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:9px 0;border-top:1px solid var(--linha);font-size:.92rem}
+  .item-ck .check{width:22px;height:22px;border-radius:7px;margin-top:1px}
+  @media (max-width:760px){.blocos{grid-template-columns:1fr}}
+
+  footer{padding-block:36px 48px;text-align:center;color:var(--texto-2);font-size:.9rem}
+  footer .wpp{display:inline-flex;margin-top:12px;background:var(--ouro);color:#fffaf0;text-decoration:none;font-weight:700;border-radius:999px;padding:12px 22px}
+  .salvo{font-size:.8rem;color:var(--texto-2);margin-top:6px}
+  @media (max-width:820px){.topo-grid{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+  @media (max-width:640px){
+    .tabela-wrap{border:0;background:transparent;overflow:visible}
+    .tabela-wrap table{min-width:0}
+    .tabela-wrap thead{display:none}
+    .tabela-wrap tbody tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px;background:var(--cartao);border:1px solid var(--linha);border-radius:14px;padding:12px;margin-bottom:10px;position:relative}
+    .tabela-wrap td{border:0;padding:0;text-align:left!important}
+    .tabela-wrap td[data-l]::before{content:attr(data-l);display:block;font-size:.7rem;letter-spacing:.05em;text-transform:uppercase;color:var(--texto-2);margin-bottom:3px}
+    .tabela-wrap td:first-child{grid-column:1/-1;padding-right:34px}
+    .tabela-wrap td:last-child{position:absolute;top:8px;right:6px}
+    .tabela-wrap td b{font-size:1.25rem}
+    .tabela-wrap tfoot tr{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--ouro);color:#fffaf0;border-radius:14px}
+    .tabela-wrap tfoot th{background:transparent;color:#fffaf0;border:0;padding:0;font-size:.9rem}
+    .tabela-wrap tfoot th:empty{display:none}
+  }
+</style>
+</head>
+<body>
+
+
+<header class="topo">
+  <div class="wrap topo-grid">
+    <div>
+      <p class="eyebrow">Painel da aluna · Workshop</p>
+      <h1>Dezembro<br><em>de Ouro</em></h1>
+      <p class="lede">Tudo o que você precisa pra montar o seu dezembro, num lugar só. Siga o mapa de 15 dias, use as ferramentas e copie as mensagens prontas.</p>
+      <div class="chips-info">
+        <span class="chip gold">Aula ao vivo · 15/11 às 15h</span>
+        <span class="chip">Gravação disponível aqui depois da aula</span>
+      </div>
+    </div>
+    <div class="progresso" aria-live="polite">
+      <svg class="anel" viewBox="0 0 100 100" aria-hidden="true">
+        <circle class="fundo-anel" cx="50" cy="50" r="42"></circle>
+        <circle class="valor" id="anel-valor" cx="50" cy="50" r="42" stroke-dasharray="263.9" stroke-dashoffset="263.9"></circle>
+        <text x="50" y="50" id="anel-txt">0</text>
+      </svg>
+      <div>
+        <b id="prog-titulo">0 de 15 dias concluídos</b>
+        <small id="prog-sub">Comece pelo dia 16: monte o seu calendário de dezembro.</small>
+        <p class="salvo">O que você marca aqui fica salvo neste aparelho.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Seções do painel">
+  <div class="wrap">
+    <a href="#mapa">Mapa de 15 dias</a>
+    <a href="#agenda">Minha agenda</a>
+    <a href="#preco">Precificação</a>
+    <a href="#whatsapp">WhatsApp</a>
+    <a href="#conteudo">Instagram</a>
+    <a href="#stories">Stories</a>
+    <a href="#estoque">Estoque</a>
+    <a href="#checklist">Checklist</a>
+  </div>
+</nav>
+
+<section id="mapa">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Guia de 15 dias · 16 a 30 de novembro</p>
+      <h2>Uma tarefa por dia, e dezembro <em>chega pronto</em>.</h2>
+      <p>Cada dia tem uma tarefa só, pensada pra caber na sua rotina de atendimento. Marque quando terminar. O botão ao lado leva direto pra ferramenta daquele dia.</p>
+    </div>
+    <div class="dias" id="dias"></div>
+  </div>
+</section>
+
+<section id="agenda">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Ferramenta · Dia 16</p>
+      <h2>Minha agenda de <em>dezembro</em></h2>
+      <p>Escolha o tipo de dia e toque no calendário pra marcar. Depois preencha quantos atendimentos cabem por dia e quanto da agenda fica pras clientes fixas. O painel calcula o resto.</p>
+    </div>
+    <div class="agenda-grid">
+      <div class="card">
+        <div class="pinceis" role="group" aria-label="Tipo de dia">
+          <button class="pincel" data-p="trabalho" aria-pressed="true"><i style="background:var(--mel)"></i>Dia de atendimento</button>
+          <button class="pincel" data-p="folga" aria-pressed="false"><i style="border:1px dashed var(--ouro)"></i>Folga</button>
+          <button class="pincel" data-p="limpar" aria-pressed="false"><i style="border:1px solid var(--linha)"></i>Apagar</button>
+        </div>
+        <div class="cal7" id="cal-dez"></div>
+        <p class="aviso">Os dias com borda vinho são 24 e 31, véspera de Natal e de Réveillon.</p>
+      </div>
+      <div class="campos">
+        <div class="campo">
+          <label for="ag-por-dia">Atendimentos por dia</label>
+          <input id="ag-por-dia" type="number" min="0" step="1" inputmode="numeric" placeholder="ex.: 2">
+          <span class="dica">Conte o tempo real de cada trança, com pausa pra comer e descansar a mão.</span>
+        </div>
+        <div class="campo">
+          <label for="ag-fixas">Parte da agenda pras clientes fixas (%)</label>
+          <input id="ag-fixas" type="number" min="0" max="100" step="5" inputmode="numeric" placeholder="ex.: 60">
+          <span class="dica">O resto fica livre pra cliente nova.</span>
+        </div>
+        <div class="resumo">
+          <div class="stat"><small>Dias de atendimento</small><b id="r-trab">0</b></div>
+          <div class="stat"><small>Folgas</small><b id="r-folga">0</b></div>
+          <div class="stat destaque"><small>Vagas no mês</small><b id="r-vagas">0</b></div>
+          <div class="stat"><small>Fixas / novas</small><b id="r-split">0 / 0</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="preco">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Ferramenta · Dia 17</p>
+      <h2>Fluxo de <em>precificação</em> de fim de ano</h2>
+      <p>Antes de abrir a agenda, revise o preço. Em dezembro a procura sobe, e é o pior momento pra descobrir que um estilo de trança está pagando pouco.</p>
+    </div>
+    <div class="fluxo">
+      <div class="passo"><h3>Quanto vale a sua hora</h3><p>Quanto você quer tirar no mês dividido pelas horas que você trabalha.</p></div>
+      <div class="passo"><h3>Quanto custa o material</h3><p>Jumbo, pomada, elástico e o que mais entra naquela trança.</p></div>
+      <div class="passo"><h3>A parte dos custos fixos</h3><p>Aluguel, luz, internet e MEI divididos pelos atendimentos do mês.</p></div>
+      <div class="passo"><h3>Taxas e sinal</h3><p>A taxa da maquininha entra no preço. O sinal garante o horário.</p></div>
+    </div>
+    <p class="formula"><b>A conta:</b> (horas da trança × valor da sua hora + material + parte dos custos fixos) ÷ (1 − taxa da maquininha). O resultado é o seu preço mínimo: abaixo dele, você paga pra trabalhar.</p>
+    <div class="preco-grid">
+      <div class="card campos">
+        <div class="campo"><label for="p-meta">Quanto você quer tirar no mês (R$)</label><input id="p-meta" type="number" min="0" inputmode="decimal" placeholder="ex.: 4000"></div>
+        <div class="campo"><label for="p-horas">Horas que você trabalha no mês</label><input id="p-horas" type="number" min="0" inputmode="decimal" placeholder="ex.: 160"></div>
+        <div class="campo"><label for="p-fixos">Custos fixos do mês (R$)</label><input id="p-fixos" type="number" min="0" inputmode="decimal" placeholder="ex.: 900"><span class="dica">Aluguel, luz, água, internet, MEI, aplicativos.</span></div>
+      </div>
+      <div class="card campos">
+        <div class="campo"><label for="p-atend">Atendimentos no mês</label><input id="p-atend" type="number" min="0" inputmode="numeric" placeholder="ex.: 40"></div>
+        <div class="campo"><label for="p-taxa">Taxa da maquininha (%)</label><input id="p-taxa" type="number" min="0" max="30" step="0.1" inputmode="decimal" placeholder="ex.: 4"></div>
+        <div class="campo"><label for="p-ajuste">Ajuste de dezembro (%)</label><input id="p-ajuste" type="number" min="0" max="100" inputmode="decimal" placeholder="ex.: 10"><span class="dica">Opcional. Você decide se dezembro tem valor diferente.</span></div>
+        <div class="campo"><label for="p-sinal">Sinal pra reservar (%)</label><input id="p-sinal" type="number" min="0" max="100" inputmode="decimal" placeholder="ex.: 30"></div>
+      </div>
+    </div>
+    <div class="resumo" style="grid-template-columns:repeat(2,minmax(0,1fr));max-width:520px;margin-top:14px">
+      <div class="stat"><small>Valor da sua hora</small><b id="r-hora">R$ 0</b></div>
+      <div class="stat"><small>Custo fixo por atendimento</small><b id="r-fixo">R$ 0</b></div>
+    </div>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th>Estilo de trança</th><th class="num">Horas</th><th class="num">Material (R$)</th><th class="num">Preço mínimo</th><th class="num">Preço de dezembro</th><th class="num">Sinal</th><th></th></tr></thead>
+        <tbody id="tab-preco"></tbody>
+      </table>
+    </div>
+    <button class="add" id="add-preco">+ Adicionar estilo</button>
+    <p class="aviso">Compare o preço mínimo com o que você cobra hoje. Se o seu preço atual estiver abaixo, dezembro é a hora de ajustar, antes de a primeira cliente marcar.</p>
+  </div>
+</section>
+
+<section id="whatsapp">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Roteiro de ativação · Dias 19 a 29</p>
+      <h2>Mensagens prontas pro <em>WhatsApp</em></h2>
+      <p>Siga a ordem do fluxo. Troque o que está entre colchetes, ajuste ao seu jeito de falar e envie. Cada botão copia a mensagem inteira.</p>
+    </div>
+    <div class="linha-fluxo" id="linha-fluxo"></div>
+    <div class="msgs" id="msgs"></div>
+  </div>
+</section>
+
+<section id="conteudo">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Roteiro de conteúdos · 16/11 a 31/12</p>
+      <h2>O que postar até o <em>Réveillon</em></h2>
+      <p>Três posts por semana, cada um com uma função: lembrar que a agenda está aberta, mostrar o seu trabalho e facilitar a marcação. Grave em lote no domingo e publique durante a semana.</p>
+    </div>
+    <div class="semanas" id="semanas"></div>
+  </div>
+</section>
+
+<section id="stories">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Sequência de stories de fim de ano</p>
+      <h2>Stories que <em>enchem a agenda</em></h2>
+      <p>Quatro sequências pros momentos-chave. Cada tela traz o texto e o recurso do Instagram que funciona melhor ali. Arraste pro lado pra ver todas.</p>
+    </div>
+    <div class="seqs" id="seqs"></div>
+  </div>
+</section>
+
+<section id="estoque">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Ferramenta · Dias 21 e 26</p>
+      <h2>Planejamento de <em>estoque</em></h2>
+      <p>Faltar jumbo no meio de dezembro custa caro: ou você paga mais caro na loja da esquina, ou perde o atendimento. Calcule agora e compre até o dia 26.</p>
+    </div>
+    <div class="campo" style="max-width:280px;margin-bottom:6px"><label for="e-margem">Margem de segurança (%)</label><input id="e-margem" type="number" min="0" max="100" inputmode="numeric" placeholder="ex.: 10"><span class="dica">Um pouco a mais pra encaixe e imprevisto.</span></div>
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th>Estilo de trança</th><th class="num">Atendimentos previstos</th><th class="num">Pacotes por atendimento</th><th class="num">Preço do pacote (R$)</th><th class="num">Pacotes pra comprar</th><th class="num">Custo</th><th></th></tr></thead>
+        <tbody id="tab-estoque"></tbody>
+        <tfoot><tr><th colspan="4">Total</th><th class="num"><span id="e-tot-pac">0</span> pacotes</th><th class="num" id="e-tot-custo">R$ 0</th><th></th></tr></tfoot>
+      </table>
+    </div>
+    <button class="add" id="add-estoque">+ Adicionar estilo</button>
+    <h3 style="margin-top:28px">Além do jumbo</h3>
+    <div class="extras" id="extras"></div>
+  </div>
+</section>
+
+<section id="checklist">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Checklist Dezembro de Ouro</p>
+      <h2>O que decidir antes de <em>dezembro chegar</em></h2>
+      <p>A revisão final do dia 30. Quanto mais itens marcados, mais tranquilo o seu mês.</p>
+    </div>
+    <div class="blocos" id="blocos"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Dezembro de Ouro · Braids Rafa Xavier 🫶🏾</p>
+    <a class="wpp" href="https://wa.me/5531982431268" target="_blank" rel="noopener">Ficou com dúvida? Fala comigo no WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const KEY='ddo-painel-v1';
+  let st={};
+  try{ st=JSON.parse(localStorage.getItem(KEY)||'{}')||{}; }catch(e){ st={}; }
+  function salvar(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  const $=s=>document.querySelector(s);
+  const brl=v=>isFinite(v)&&v>0? v.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}) : 'R$ 0';
+  const num=v=>{ const n=parseFloat(String(v).replace(',','.')); return isFinite(n)?n:0; };
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  /* ---------- MAPA 15 DIAS ---------- */
+  const DIAS=[
+    ['16','Seg','Monte o seu calendário de dezembro: folgas, dias de atendimento e quantas clientes cabem por dia.','#agenda','Abrir agenda'],
+    ['17','Ter','Calcule o preço de dezembro de cada estilo e o valor do sinal.','#preco','Abrir calculadora'],
+    ['18','Qua','Faça a lista das clientes fixas: nome, data da última trança e quando ela deve voltar.','#checklist','Ver checklist'],
+    ['19','Qui','Envie a mensagem de prioridade pras clientes fixas.','#m1','Copiar mensagem'],
+    ['20','Sex','Escreva as suas regras de sinal, remarcação e falta, e deixe salvas como mensagem pronta.','#m4','Ver mensagem'],
+    ['21','Sáb','Faça o planejamento de estoque e a lista de compras.','#estoque','Abrir estoque'],
+    ['22','Dom','Dia de descanso. Se der vontade, grave 2 ou 3 conteúdos da semana de uma vez.','#conteudo','Ver roteiro',true],
+    ['23','Seg','Publique o anúncio da agenda de dezembro: post da semana + sequência de stories de abertura.','#stories','Ver stories'],
+    ['24','Ter','Mande o lembrete pras clientes fixas que ainda não responderam.','#m2','Copiar mensagem'],
+    ['25','Qua','Abra a agenda pra cliente nova com a mensagem da lista de transmissão.','#m3','Copiar mensagem'],
+    ['26','Qui','Compre o material da sua lista de estoque.','#estoque','Ver lista'],
+    ['27','Sex','Deixe pronta a resposta de agenda fechada e organize a sua lista de espera.','#m6','Ver mensagem'],
+    ['28','Sáb','Decida quanto do que entrar em dezembro fica guardado pra janeiro e fevereiro.','#checklist','Ver checklist'],
+    ['29','Dom','Abra a agenda de janeiro pra quem não conseguiu horário em dezembro.','#m9','Copiar mensagem',true],
+    ['30','Seg','Revisão final: confira o painel, os sinais da primeira semana e o estoque.','#checklist','Fazer revisão']
+  ];
+  st.dias=st.dias||{};
+  const elDias=$('#dias');
+  elDias.innerHTML=DIAS.map(([d,s,t,href,lbl,desc])=>`
+    <div class="dia${desc?' descanso':''}" data-d="${d}">
+      <input type="checkbox" class="check" id="dia-${d}" aria-label="Concluí o dia ${d} de novembro">
+      <label class="data" for="dia-${d}"><small>${s}</small><b>${d}/11</b></label>
+      <label class="tarefa" for="dia-${d}">${esc(t)}</label>
+      <a class="ir" href="${href}">${lbl} →</a>
+    </div>`).join('');
+  function atualizaProgresso(){
+    const feitos=DIAS.filter(([d])=>st.dias[d]).length;
+    elDias.querySelectorAll('.dia').forEach(el=>el.classList.toggle('feito',!!st.dias[el.dataset.d]));
+    const c=263.9; $('#anel-valor').setAttribute('stroke-dashoffset', String(c-(c*feitos/15)));
+    $('#anel-txt').textContent=feitos;
+    $('#prog-titulo').textContent=`${feitos} de 15 dias concluídos`;
+    const prox=DIAS.find(([d])=>!st.dias[d]);
+    $('#prog-sub').textContent= prox? `Próxima tarefa (${prox[0]}/11): ${prox[2]}` : 'Mapa completo. O seu dezembro está pronto. 🫶🏾';
+  }
+  DIAS.forEach(([d])=>{ const cb=$('#dia-'+d); cb.checked=!!st.dias[d]; cb.addEventListener('change',()=>{ st.dias[d]=cb.checked; salvar(); atualizaProgresso(); }); });
+  atualizaProgresso();
+
+  /* ---------- AGENDA ---------- */
+  st.agenda=st.agenda||{};
+  let pincel='trabalho';
+  document.querySelectorAll('.pincel').forEach(b=>b.addEventListener('click',()=>{
+    pincel=b.dataset.p; document.querySelectorAll('.pincel').forEach(x=>x.setAttribute('aria-pressed', String(x===b)));
+  }));
+  const cal=$('#cal-dez');
+  let html=['D','S','T','Q','Q','S','S'].map(d=>`<div class="dow">${d}</div>`).join('');
+  for(let i=0;i<2;i++) html+='<div></div>'; // 1/12/2026 é terça
+  for(let d=1; d<=31; d++) html+=`<button class="dd${(d===24||d===31)?' festa':''}" data-d="${d}" aria-label="${d} de dezembro">${d}<small></small></button>`;
+  cal.innerHTML=html;
+  function pintaAgenda(){
+    cal.querySelectorAll('.dd').forEach(b=>{
+      const v=st.agenda[b.dataset.d]||'';
+      b.classList.toggle('trabalho',v==='trabalho'); b.classList.toggle('folga',v==='folga');
+      b.querySelector('small').textContent= v==='folga'?'folga':'';
+      b.setAttribute('aria-pressed', v?'true':'false');
+    });
+    const trab=Object.values(st.agenda).filter(v=>v==='trabalho').length;
+    const folga=Object.values(st.agenda).filter(v=>v==='folga').length;
+    const porDia=num($('#ag-por-dia').value), pf=Math.min(100,num($('#ag-fixas').value));
+    const vagas=Math.round(trab*porDia), fixas=Math.round(vagas*pf/100);
+    $('#r-trab').textContent=trab; $('#r-folga').textContent=folga; $('#r-vagas').textContent=vagas;
+    $('#r-split').textContent=`${fixas} / ${vagas-fixas}`;
+  }
+  cal.addEventListener('click',e=>{
+    const b=e.target.closest('.dd'); if(!b) return;
+    const d=b.dataset.d;
+    if(pincel==='limpar' || st.agenda[d]===pincel) delete st.agenda[d]; else st.agenda[d]=pincel;
+    salvar(); pintaAgenda();
+  });
+  st.campos=st.campos||{};
+  function ligaCampo(id,cb){ const el=$('#'+id); if(st.campos[id]!=null) el.value=st.campos[id]; el.addEventListener('input',()=>{ st.campos[id]=el.value; salvar(); cb(); }); }
+  ['ag-por-dia','ag-fixas'].forEach(id=>ligaCampo(id,pintaAgenda));
+  pintaAgenda();
+
+  /* ---------- PREÇO ---------- */
+  st.precos=st.precos||[{n:'',h:'',m:''},{n:'',h:'',m:''},{n:'',h:'',m:''}];
+  const exemplosP=['ex.: Box braids médias','ex.: Nagô com jumbo','ex.: Fulani braids'];
+  const tp=$('#tab-preco');
+  function base(){
+    const hora= num($('#p-horas').value)>0 ? num($('#p-meta').value)/num($('#p-horas').value) : 0;
+    const fixo= num($('#p-atend').value)>0 ? num($('#p-fixos').value)/num($('#p-atend').value) : 0;
+    const taxa=Math.min(.9,num($('#p-taxa').value)/100), aj=num($('#p-ajuste').value)/100, sinal=num($('#p-sinal').value)/100;
+    return {hora,fixo,taxa,aj,sinal};
+  }
+  function linhaPreco(r,i){
+    return `<tr data-i="${i}">
+      <td><input class="nome" data-k="n" value="${esc(r.n)}" placeholder="${exemplosP[i%3]}" aria-label="Estilo de trança"></td>
+      <td class="num" data-l="Horas"><input data-k="h" type="number" min="0" step="0.5" inputmode="decimal" value="${esc(r.h)}" placeholder="ex.: 5" aria-label="Horas"></td>
+      <td class="num" data-l="Material (R$)"><input data-k="m" type="number" min="0" inputmode="decimal" value="${esc(r.m)}" placeholder="ex.: 60" aria-label="Material em reais"></td>
+      <td class="num" data-l="Preço mínimo"><b class="o-min">R$ 0</b></td><td class="num" data-l="Preço de dezembro"><b class="o-dez">R$ 0</b></td><td class="num" data-l="Sinal"><b class="o-sinal">R$ 0</b></td>
+      <td><button class="rm" aria-label="Remover linha">×</button></td></tr>`;
+  }
+  function desenhaPreco(){ tp.innerHTML=st.precos.map(linhaPreco).join(''); calcPreco(); }
+  function calcPreco(){
+    const b=base();
+    $('#r-hora').textContent=brl(b.hora); $('#r-fixo').textContent=brl(b.fixo);
+    tp.querySelectorAll('tr').forEach(tr=>{
+      const r=st.precos[tr.dataset.i]; const h=num(r.h), m=num(r.m);
+      const min= (h>0||m>0) ? (h*b.hora+m+b.fixo)/(1-b.taxa) : 0;
+      const dez=min*(1+b.aj);
+      tr.querySelector('.o-min').textContent=brl(min);
+      tr.querySelector('.o-dez').textContent=brl(dez);
+      tr.querySelector('.o-sinal').textContent=brl(dez*b.sinal);
+    });
+  }
+  tp.addEventListener('input',e=>{ const tr=e.target.closest('tr'); const k=e.target.dataset.k; if(!tr||!k) return; st.precos[tr.dataset.i][k]=e.target.value; salvar(); calcPreco(); });
+  tp.addEventListener('click',e=>{ if(!e.target.classList.contains('rm')) return; st.precos.splice(e.target.closest('tr').dataset.i,1); salvar(); desenhaPreco(); });
+  $('#add-preco').addEventListener('click',()=>{ st.precos.push({n:'',h:'',m:''}); salvar(); desenhaPreco(); });
+  ['p-meta','p-horas','p-fixos','p-atend','p-taxa','p-ajuste','p-sinal'].forEach(id=>ligaCampo(id,calcPreco));
+  desenhaPreco();
+
+  /* ---------- MENSAGENS ---------- */
+  const MSGS=[
+    ['m1','Prioridade pra cliente fixa','Dia 19 · só pras clientes fixas',
+`Oi, [nome]! Tudo bem? 🌺
+
+Antes de abrir a minha agenda de dezembro pra todo mundo, quis te oferecer primeiro.
+
+Você quer garantir o seu horário pras festas? Estou segurando os horários das minhas clientes até [data].
+
+Me fala o melhor dia pra você que eu já reservo.`],
+    ['m2','Lembrete pra quem não respondeu','Dia 24 · 3 a 5 dias depois da primeira',
+`Oi, [nome]! Passando pra lembrar que o seu horário de dezembro fica reservado até [data].
+
+Depois disso a agenda abre pra todo mundo, e os dias perto do Natal costumam ir primeiro.
+
+Quer que eu deixe algum dia separado pra você?`],
+    ['m3','Agenda aberta pra todo mundo','Dia 25 · lista de transmissão e status',
+`🌺 Agenda de dezembro aberta!
+
+Os horários são limitados, e as semanas antes do Natal e do Réveillon são as mais procuradas.
+
+Pra garantir o seu:
+1. Me manda o dia e o estilo de trança
+2. Eu confirmo se o horário está livre
+3. O horário fica reservado com o sinal de [valor]
+
+Me chama aqui que eu te passo os dias livres.`],
+    ['m4','Confirmação com sinal e regras','Sempre que alguém marcar',
+`Prontinho, [nome]! O seu horário está pré-reservado:
+
+[dia], às [hora]
+[estilo de trança]
+
+Pra confirmar, o sinal é de [valor], pago até [data] pelo Pix [chave].
+
+As regras de dezembro:
+• Remarcação com pelo menos [X] dias de antecedência
+• Falta sem aviso: o sinal não é devolvido
+• Chegue com o cabelo [como você orienta]
+
+Qualquer dúvida, é só me chamar 🫶🏾`],
+    ['m5','Lembrete da véspera','Um dia antes de cada atendimento',
+`Oi, [nome]! Passando pra confirmar o seu horário amanhã, [dia], às [hora].
+
+Lembra de vir com o cabelo [como você orienta].
+
+Te espero! 🌺`],
+    ['m6','Agenda fechada','Dia 27 em diante · quando lotar',
+`Oi, [nome]! Obrigada por lembrar de mim 🫶🏾
+
+A minha agenda de dezembro já está completa. Posso fazer duas coisas por você:
+
+• Te colocar na lista de espera: se alguém desmarcar, você é a primeira a saber
+• Reservar um horário nos primeiros dias de janeiro
+
+Qual você prefere?`],
+    ['m7','Depois do atendimento','No dia seguinte à trança',
+`Oi, [nome]! Espero que você esteja amando as tranças 💖
+
+Pra elas durarem bonitas até o Réveillon: [cuidado 1] e [cuidado 2].
+
+Se puder, me manda uma foto usando? E se alguma amiga perguntar quem fez, pode passar o meu contato que eu cuido dela com o mesmo carinho.`],
+    ['m8','Cliente que sumiu','Qualquer dia de novembro',
+`Oi, [nome]! Quanto tempo! 🌺
+
+Estou montando a agenda de dezembro e lembrei de você. Se quiser trançar pras festas, consigo te encaixar antes de abrir pra todo mundo.
+
+Quer que eu te mande os dias livres?`],
+    ['m9','Agenda de janeiro','Dia 29 · pra quem ficou sem horário',
+`Oi, [nome]! Dezembro lotou, mas não quero que você fique sem horário.
+
+Já estou abrindo a agenda de janeiro, e você tem prioridade. Os primeiros dias do ano costumam ir rápido também.
+
+Quer garantir o seu?`]
+  ];
+  const CURTO=['Fixas','Lembrete','Agenda aberta','Confirmação','Véspera','Agenda fechada','Pós-atendimento'];
+  $('#linha-fluxo').innerHTML=CURTO.map((t,i)=>`${i?'<span>→</span>':''}<a href="#${MSGS[i][0]}">${i+1}. ${t}</a>`).join('')
+    +'<span>+</span><a href="#m8">Cliente sumida</a><span>+</span><a href="#m9">Janeiro</a>';
+  $('#msgs').innerHTML=MSGS.map(([id,t,q,txt],i)=>`
+    <article class="card msg" id="${id}">
+      <div class="topo-msg"><div><p class="quando">${i+1} · ${esc(q)}</p><h3>${esc(t)}</h3></div><button class="copiar" data-i="${i}">Copiar</button></div>
+      <div class="bolha">${esc(txt)}</div>
+    </article>`).join('');
+  function copiaTexto(txt,btn){
+    const ok=()=>{ btn.textContent='Copiado ✓'; btn.classList.add('ok'); setTimeout(()=>{btn.textContent='Copiar'; btn.classList.remove('ok');},1800); };
+    const fallback=()=>{ const ta=document.createElement('textarea'); ta.value=txt; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); ok(); }catch(e){ btn.textContent='Selecione e copie'; } document.body.removeChild(ta); };
+    try{ navigator.clipboard.writeText(txt).then(ok,fallback); }catch(e){ fallback(); }
+  }
+  $('#msgs').addEventListener('click',e=>{ const b=e.target.closest('.copiar'); if(!b) return; copiaTexto(MSGS[b.dataset.i][3],b); });
+
+  /* ---------- CONTEÚDO ---------- */
+  const SEM=[
+    ['16 a 22/11','Agenda aberta pras fixas',[
+      ['reels','Reels','“Dezembro já começou pra quem trança.” Mostre o caderno ou a agenda e conte que as clientes fixas têm prioridade até [data].','CTA: “Me chama no direct pra garantir o seu.”'],
+      ['carrossel','Carrossel','Como garantir o seu horário de dezembro: escolher o estilo, mandar mensagem, pagar o sinal, regras de remarcação.','CTA: “Salva pra não esquecer.”'],
+      ['foto','Foto','Uma trança recente bem fotografada, com a legenda contando que dezembro já está com horários sendo reservados.','CTA: “Os dias perto do Natal saem primeiro.”']]],
+    ['23 a 29/11','Agenda aberta pra todo mundo',[
+      ['reels','Reels','“Se você trançar no dia X, ela ainda está linda no Réveillon?” Mostre quanto tempo dura cada estilo.','CTA: “Comenta o estilo que você quer.”'],
+      ['carrossel','Carrossel','Uma trança pra cada festa: Natal em família, Réveillon, viagem de férias.','CTA: “Manda pra amiga que vai viajar.”'],
+      ['foto','Post 27/11','Black Friday: “Aqui a Black Friday é horário garantido.” Prioridade e organização, sem desconto.','CTA: “Me chama que eu te passo os dias livres.”']]],
+    ['30/11 a 06/12','Primeira quinzena',[
+      ['reels','Reels','Antes e depois de uma cliente, com o tempo de trabalho na tela.','CTA: “Ainda tenho [X] horários na primeira quinzena.”'],
+      ['carrossel','Carrossel','Trança no verão: cuidados com praia, piscina e calor.','CTA: “Salva e manda pra quem vai pra praia.”'],
+      ['foto','Foto','Prova social: cliente usando a trança no dia a dia (com autorização dela).','CTA: “Quer ser a próxima? Me chama.”']]],
+    ['07 a 13/12','Agenda do Natal',[
+      ['reels','Reels','Bastidores de um dia de atendimento: da preparação ao resultado.','CTA: “Últimos horários antes do Natal no direct.”'],
+      ['foto','Post','“Últimos horários antes do Natal”, com os dias livres escritos na arte.','CTA: “Responde com o dia que você quer.”'],
+      ['carrossel','Carrossel','Como chegar no dia do atendimento: cabelo, horário, o que trazer.','CTA: “Salva pro seu dia.”']]],
+    ['14 a 20/12','A semana mais cheia',[
+      ['reels','Reels','Conteúdo leve, gravado antes: o ritmo da semana, uma trança em andamento.','CTA: “Lista de espera aberta.”'],
+      ['foto','Post','Lista de espera aberta: quem desmarca libera horário pra quem está na fila.','CTA: “Me chama pra entrar na lista.”'],
+      ['foto','Stories','Bastidores diários: manhã, trança em andamento, resultado.','CTA: Caixa de perguntas.']]],
+    ['21 a 27/12','Natal e janeiro',[
+      ['foto','Post','Agradecimento às clientes do ano, com fotos (autorizadas) dos trabalhos.','CTA: “Obrigada por confiar em mim. 🫶🏾”'],
+      ['reels','Reels','“Agenda de janeiro aberta”: prioridade pra quem não conseguiu horário em dezembro.','CTA: “Garanta o seu no direct.”'],
+      ['carrossel','Carrossel','Looks de Réveillon com tranças.','CTA: “Qual você usaria?”']]],
+    ['28 a 31/12','Réveillon',[
+      ['reels','Reels','Retrospectiva dos seus trabalhos do ano.','CTA: “Qual foi a sua favorita?”'],
+      ['foto','Post','Mensagem de fim de ano + os primeiros dias livres de janeiro.','CTA: “Janeiro já está abrindo.”']]]
+  ];
+  $('#semanas').innerHTML=SEM.map(([d,t,ps])=>`
+    <div class="card semana"><div class="rot"><small>${d}</small><b>${esc(t)}</b></div>
+      <div class="posts">${ps.map(([cls,f,txt,cta])=>`<div class="post"><span class="fmt ${cls}">${f}</span><p>${esc(txt)}<span class="cta">${esc(cta)}</span></p></div>`).join('')}</div>
+    </div>`).join('');
+
+  /* ---------- STORIES ---------- */
+  const SEQ=[
+    ['Abertura da agenda','Dia 23/11 · 6 telas',[
+      ['Você já sabe onde vai trançar pro Natal?','Enquete: “Já sei” / “Ainda não”'],
+      ['A minha agenda de dezembro abre hoje.','Foto sua trabalhando'],
+      ['As clientes fixas tiveram prioridade até [data]. Agora os horários estão abertos pra todo mundo.','Texto sobre fundo liso'],
+      ['Esses são os dias livres:','Foto do calendário ou lista de dias'],
+      ['Como garantir: me manda o dia e o estilo, eu confirmo, e o sinal reserva o seu horário.','Texto em 3 passos'],
+      ['Qual dia você quer?','Link do WhatsApp',true]]],
+    ['Últimos horários','A partir de 07/12 · 4 telas',[
+      ['Restam [X] horários antes do Natal.','Contagem regressiva até 24/12'],
+      ['[dia] · [dia] · [dia]','Lista dos dias livres'],
+      ['Olha como ficou a da [cliente] essa semana.','Foto ou vídeo de trança recente'],
+      ['Quer garantir o seu?','Link do WhatsApp',true]]],
+    ['Bastidores da semana cheia','14 a 20/12 · 3 telas por dia',[
+      ['Bom dia! Hoje são [X] atendimentos.','Foto do espaço arrumado'],
+      ['Olha o processo dessa aqui.','Vídeo curto da trança em andamento'],
+      ['Resultado! Tem lista de espera aberta pra quem ficou sem horário.','Caixa de perguntas',true]]],
+    ['Agenda de janeiro','A partir de 26/12 · 4 telas',[
+      ['Dezembro lotou. Obrigada! 🫶🏾','Foto de um trabalho do mês'],
+      ['Quem não conseguiu horário: janeiro já está abrindo.','Texto sobre fundo liso'],
+      ['[dia] · [dia] · [dia]','Primeiros dias livres de janeiro'],
+      ['Garanta o seu antes de lotar.','Link do WhatsApp',true]]]
+  ];
+  $('#seqs').innerHTML=SEQ.map(([t,q,tel])=>`
+    <div><div class="seq-head"><h3>${esc(t)}</h3><span class="eyebrow" style="margin:0">${esc(q)}</span></div>
+      <div class="telas">${tel.map(([txt,rec,forte],i)=>`<div class="tela${forte?' forte':''}"><span class="n">TELA ${i+1}</span><p>${esc(txt)}</p><span class="rec">${esc(rec)}</span></div>`).join('')}</div>
+    </div>`).join('');
+
+  /* ---------- ESTOQUE ---------- */
+  st.estoque=st.estoque||[{n:'',a:'',p:'',v:''},{n:'',a:'',p:'',v:''},{n:'',a:'',p:'',v:''}];
+  const exemplosE=['ex.: Box braids','ex.: Nagô','ex.: Fulani'];
+  const te=$('#tab-estoque');
+  function linhaE(r,i){
+    return `<tr data-i="${i}">
+      <td><input class="nome" data-k="n" value="${esc(r.n)}" placeholder="${exemplosE[i%3]}" aria-label="Estilo"></td>
+      <td class="num" data-l="Atendimentos"><input data-k="a" type="number" min="0" inputmode="numeric" value="${esc(r.a)}" placeholder="ex.: 12" aria-label="Atendimentos previstos"></td>
+      <td class="num" data-l="Pacotes por cliente"><input data-k="p" type="number" min="0" step="0.5" inputmode="decimal" value="${esc(r.p)}" placeholder="ex.: 4" aria-label="Pacotes por atendimento"></td>
+      <td class="num" data-l="Preço do pacote"><input data-k="v" type="number" min="0" inputmode="decimal" value="${esc(r.v)}" placeholder="ex.: 12" aria-label="Preço do pacote"></td>
+      <td class="num" data-l="Pacotes pra comprar"><b class="o-pac">0</b></td><td class="num" data-l="Custo"><b class="o-custo">R$ 0</b></td>
+      <td><button class="rm" aria-label="Remover linha">×</button></td></tr>`;
+  }
+  function desenhaE(){ te.innerHTML=st.estoque.map(linhaE).join(''); calcE(); }
+  function calcE(){
+    const mg=1+num($('#e-margem').value)/100; let tp_=0, tc=0;
+    te.querySelectorAll('tr').forEach(tr=>{
+      const r=st.estoque[tr.dataset.i]; const pac=Math.ceil(num(r.a)*num(r.p)*mg); const c=pac*num(r.v);
+      tp_+=pac; tc+=c;
+      tr.querySelector('.o-pac').textContent=pac; tr.querySelector('.o-custo').textContent=brl(c);
+    });
+    $('#e-tot-pac').textContent=tp_; $('#e-tot-custo').textContent=brl(tc);
+  }
+  te.addEventListener('input',e=>{ const tr=e.target.closest('tr'); const k=e.target.dataset.k; if(!tr||!k) return; st.estoque[tr.dataset.i][k]=e.target.value; salvar(); calcE(); });
+  te.addEventListener('click',e=>{ if(!e.target.classList.contains('rm')) return; st.estoque.splice(e.target.closest('tr').dataset.i,1); salvar(); desenhaE(); });
+  $('#add-estoque').addEventListener('click',()=>{ st.estoque.push({n:'',a:'',p:'',v:''}); salvar(); desenhaE(); });
+  ligaCampo('e-margem',calcE);
+  desenhaE();
+
+  st.ck=st.ck||{};
+  function ligaChecks(container){
+    container.querySelectorAll('input.check[data-ck]').forEach(cb=>{ cb.checked=!!st.ck[cb.dataset.ck]; cb.addEventListener('change',()=>{ st.ck[cb.dataset.ck]=cb.checked; salvar(); }); });
+  }
+  const EXTRAS=['Pomada ou gel','Mousse finalizador','Óleo pro couro cabeludo','Elásticos','Agulha e linha','Pente de cauda','Borrifador','Toalhas limpas','Água e lanche pros dias cheios'];
+  $('#extras').innerHTML=EXTRAS.map((t,i)=>`<label class="extra"><input type="checkbox" class="check" data-ck="ex${i}">${esc(t)}</label>`).join('');
+  ligaChecks($('#extras'));
+
+  /* ---------- CHECKLIST ---------- */
+  const BLOCOS=[
+    ['1','O seu calendário',['Marcar as duas semanas antes do Natal e a semana do Réveillon','Decidir quantos atendimentos cabem em um dia','Bloquear as folgas antes de abrir a agenda','Definir o último dia de atendimento antes do Natal e do Réveillon','Decidir se vai estender horário, em quais dias e até que horas']],
+    ['2','As suas clientes fixas',['Fazer a lista das clientes que trançam com você com frequência','Anotar a última trança e quando cada uma deve voltar','Oferecer prioridade de horário, sem desconto','Definir até que dia a prioridade vale']],
+    ['3','A cliente nova',['Decidir quantos horários ficam pra cliente nova','Definir até que data aceita encaixe','Deixar pronta a resposta de agenda fechada']],
+    ['4','Reserva e valores',['Revisar a tabela de preços antes de abrir dezembro','Definir o valor do sinal e o prazo pra pagar','Escrever a regra de remarcação e de falta','Comprar o material com antecedência']],
+    ['5','Você',['Planejar refeições e pausas dos dias mais cheios','Decidir quanto fica guardado pro começo do ano','Reservar um dia só seu entre o Natal e o Réveillon']]
+  ];
+  $('#blocos').innerHTML=BLOCOS.map(([n,t,its])=>`<div class="card bloco"><h3><span>${n}</span>${esc(t)}</h3>${its.map((x,i)=>`<label class="item-ck"><input type="checkbox" class="check" data-ck="b${n}-${i}">${esc(x)}</label>`).join('')}</div>`).join('');
+  ligaChecks($('#blocos'));
+
+  /* ---------- NAV ATIVA ---------- */
+  const links=[...document.querySelectorAll('.nav a')];
+  if('IntersectionObserver' in window){
+    const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ links.forEach(a=>a.classList.toggle('ativo',a.getAttribute('href')==='#'+e.target.id)); const at=links.find(a=>a.classList.contains('ativo')); if(at){ const nav=at.parentElement; nav.scrollLeft=at.offsetLeft-nav.clientWidth/2+at.clientWidth/2; } } }),{rootMargin:'-45% 0px -50% 0px'});
+    document.querySelectorAll('section[id]').forEach(s=>io.observe(s));
+  }
+})();
+</script>
+
+</body>
+</html>
