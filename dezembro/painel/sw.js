@@ -1,5 +1,5 @@
 // Painel Dezembro de Ouro: guarda a página pra abrir sem internet.
-const CACHE = 'ddo-painel-v3';
+const CACHE = 'ddo-painel-v4';
 const BASE = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
